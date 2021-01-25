@@ -6,43 +6,50 @@ import com.exceptions.InvalidRollException;
 public class Frame {
 	
 	private int frameNumber;
-	private int firstRoll;
-	private int secondRoll;
+	private int roll1;
+	private int roll2;
 	private int pins;
 	
 	
 	public Frame() {
 		this.frameNumber = 1;
-		this.firstRoll = -1;
+		this.roll1 = -1;
+		this.roll2 = -1;
+		this.pins = 10;
 		
 	}
 	
 	public Frame(int frameNumber) {
 		this.frameNumber = frameNumber;
-		this.rolls = new ArrayList<Integer>();
-		int
+		this.roll1 = -1;
+		this.roll2 = -1;
+		this.pins = 10;
 	}
 	
-	public void addRoll(int pinsHit) {
-		this.rolls.add(pinsHit);
-		this.pins = this.pins - pinsHit;
-		
-		if (pins) 
-		
-		
+	public void addRoll(int pinsHit) throws InvalidRollException {
+		if (pins > 0) {
+			int safetyPins = this.pins;
+			if (roll1 < 0) {
+				this.roll1 = pinsHit;
+				this.pins = this.pins - pinsHit;
+			} else if (roll2 < 0) {
+				this.roll2 = pinsHit;
+				this.pins = this.pins - pinsHit;
+			} else {
+				throw new InvalidRollException("You cannot roll the ball more than twice per frame");
+			}
+			
+			if (pins < 0) {
+				this.pins = safetyPins;
+				throw new InvalidRollException("You can't knock down more than 10 pins per frame");
+			}
+		} else {
+			throw new InvalidRollException("You already knocked down all the pins");
+		}
 	}
 	
-	public void addSecondRoll(int pinsHit) {
-		this.secondRoll = pinsHit;
-		this.pins = this.pins - pinsHit;
-	}
-	
-	public int getFirstRoll() {
-		return this.firstRoll;
-	}
-	
-	public int getSecondRoll() {
-		return this.secondRoll;
+	public int getPins() {
+		return this.pins;
 	}
 	
 }
