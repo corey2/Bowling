@@ -13,20 +13,18 @@ public class Frame {
 	
 	public Frame() {
 		this.frameNumber = 1;
-		this.pins = 10;
+		this.firstRoll = -1;
+		
 	}
 	
 	public Frame(int frameNumber) {
 		this.frameNumber = frameNumber;
-		this.pins = 10;
+		this.rolls = new ArrayList<Integer>();
+		int
 	}
 	
-	public void addFirstRoll(int pinsHit) {
-		if (pins != 10) {
-			throw new InvalidRollException("This is not your first roll");
-		}
-		
-		this.firstRoll = pinsHit;
+	public void addRoll(int pinsHit) {
+		this.rolls.add(pinsHit);
 		this.pins = this.pins - pinsHit;
 		
 		if (pins) 

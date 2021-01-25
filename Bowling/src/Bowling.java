@@ -18,50 +18,18 @@ public class Bowling {
 		while (f<=10) {
 			System.out.println("Starting Frame "+f);
 			Frame frame = new Frame(f);
-			if (f != 10) {
-				int result1 = rollFirstBall(game, frame, console);
-				if (result1 != 10) {
-					int result2 = rollSecondBall(game, frame, console);
+			while (r<=2) {
+				System.out.println("Enter the result of roll "+r);
+				String result = console.nextLine();
+					
+				//https://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
+				if (result.matches("-?(0|[1-9]\\d*)")) {
+					frame.addRoll
+					
 				}
-			} else {
-				System.out.println("You made it to the 10th frame.");
-			}
 		}	
 	}
-		
-	public static int rollFirstBall(Game game, Frame frame, Scanner console) {
-		int pinsHit = 0;
-		boolean flag = true;
-		while (flag) {
-			flag = false;
-			System.out.println("Enter the result of your first roll:");
-			String result = console.nextLine();
-				
-			//https://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
-			if (result.matches("-?(0|[1-9]\\d*)")) {
-				pinsHit = Integer.parseInt(result);
-				if (pinsHit < 1 || pinsHit > 9) {
-					System.out.println("You must enter a number bewteen 1 and 9");
-					flag = true;
-				}
-			} else if (result.equalsIgnoreCase("Miss")) {
-				pinsHit = 0;
-			} else if (result.equalsIgnoreCase("Strike")) {
-				pinsHit = 10;
-			} else if (result.equalsIgnoreCase("Spare")) {
-			    System.out.println("You cannot get a spare on your first roll");
-			    flag = true;
-			}
-		}
-				
-		frame.addFirstRoll(pinsHit);
-		
-		return pinsHit;
-	}
-		
-	public static void rollSecondBall() {
-		
-	}
+	
 	
 }
 			
