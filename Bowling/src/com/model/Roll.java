@@ -1,3 +1,4 @@
+package com.model;
 public class Roll {
 	
 	private boolean second;
