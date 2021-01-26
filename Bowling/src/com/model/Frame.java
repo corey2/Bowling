@@ -55,29 +55,10 @@ public class Frame {
 	public void print() {
 		printRow("Frame", Integer.toString(this.frameNumber));
 		
-		String row = "";
-		if (this.roll1 >= 0) {
-			if (this.roll1 == 0) {  //First roll miss
-				row = row+"- ";
-			} else if (this.roll1 == 10) {  //Strike
-				row = row+"X";
-			} else {  //First Roll 1-9
-				row = row+this.roll1+" ";
-			}
-		}
-		if (this.roll2 >= 0) {
-			//System.out.println("Print Check:");
-			//System.out.println(this.roll2);
-			//System.out.println(this.pins);
-			if (this.roll2 == 0) {  //Second roll miss
-				row = row+"-";
-			} else if (this.pins == 0) {  //Spare
-				row = row+"/";
-			} else {  //Second Roll 1-9
-				row = row+this.roll2;
-			}
-		}
-		printRow("Rolls", row);
+		String roll1Display = getRoll1Display();
+		String roll2Display = getRoll2Display();
+		String rolls = roll1Display + " " + roll2Display;
+		printRow("Rolls", rolls);
 		
 		String score = Integer.toString(10 - this.pins);
 		if (score.equals("10")) {
@@ -110,4 +91,34 @@ public class Frame {
 		return this.frameNumber;
 	}
 	
+	String getRoll1Display() {
+		String display = "";
+		if (this.roll1 >= 0) {
+			if (this.roll1 == 0) {  //First roll miss
+				display = "-";
+			} else if (this.roll1 == 10) {  //Strike
+				display = "X";
+			} else {  //First Roll 1-9
+				display = this.roll1+"";
+			}
+		}
+		return display;
+	}
+	
+	String getRoll2Display() {
+		String display = "";
+		if (this.roll2 >= 0) {
+			//System.out.println("Print Check:");
+			//System.out.println(this.roll2);
+			//System.out.println(this.pins);
+			if (this.roll2 == 0) {  //Second roll miss
+				display = "-";
+			} else if (this.pins == 0) {  //Spare
+				display = "/";
+			} else {  //Second Roll 1-9
+				display = this.roll2+"";
+			}
+		}
+		return display;
+	}
 }

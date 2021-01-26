@@ -40,7 +40,7 @@ public class Bowling {
 					}
 				} else if (result.equalsIgnoreCase("Spare")) {
 					if (r == 2) {
-						r = safeRoll(frame, 10, r);
+						r = safeRoll(frame, frame.getPins(), r);
 					} else {
 						System.out.println("Your first roll cannot be a spare.");
 					}

@@ -42,6 +42,11 @@ public class Game {
 	}
 	
 	private void buildRollLine(Frame f) {
+		String roll1Display = f.getRoll1Display();
+		String roll2Display = f.getRoll2Display();
+		
+		
+		
 		
 	}
 	
