@@ -50,9 +50,10 @@ public class Bowling {
 				System.out.println("Pins remaining: "+frame.getPins());
 			}	
 			r=1;
+			game.addFrame(frame);
 			f++;
 		}
-	
+		game.print();
 	
 	}
 	

@@ -54,6 +54,7 @@ public class Frame {
 	
 	public void print() {
 		printRow("Frame", Integer.toString(this.frameNumber));
+		
 		String row = "";
 		if (this.roll1 >= 0) {
 			if (this.roll1 == 0) {  //First roll miss
@@ -78,6 +79,12 @@ public class Frame {
 		}
 		printRow("Rolls", row);
 		
+		String score = Integer.toString(10 - this.pins);
+		if (score.equals("10")) {
+			score = "TBD";
+		}
+		printRow("Score", score);
+		
 	}
 	
 	private void printRow(String title, String input) {
@@ -85,6 +92,7 @@ public class Frame {
 		System.out.println(" "+input+" |");
 	}
 	
+	//If the number of pins falls below 0, this method will undo the roll and throw an exception.
 	private void checkPins(int roll, int safetyPins) throws InvalidRollException {
 		if (this.pins < 0) {
 			this.pins = safetyPins;
@@ -96,6 +104,10 @@ public class Frame {
 			}
 			throw new InvalidRollException("You can't knock down more than 10 pins per frame");
 		}
+	}
+	
+	int getFrameNumber() {
+		return this.frameNumber;
 	}
 	
 }
