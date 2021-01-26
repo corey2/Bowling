@@ -9,7 +9,7 @@ public class Bowling {
 	public static void main(String[] args) {
 		System.out.println("Welcome to Corey's bowling application!");
 		System.out.println("How to use: Every time you roll the ball, you must enter your score for that roll.");
-		System.out.println("Acceptable Input Values: 1, 2, 3, 4, 5, 6, 7, 8, 9, Miss, Spare, Strike");
+		System.out.println("Acceptable Input Values: 1, 2, 3, 4, 5, 6, 7, 8, 9, Miss, Strike, Spare");
 		System.out.println("If you input an unacceptable value, the program will prompt you to re-enter an acceptable value");
 		Scanner console = new Scanner(System.in);
 		Game game = new Game();

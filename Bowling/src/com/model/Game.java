@@ -10,13 +10,18 @@ public class Game {
 	private String rollLine;
 	private String scoreLine;
 	private int totalScore;
+	private boolean prevStrike;
+	private boolean prevSpare;
+	
 	
 	public Game() {
 		this.frames = new ArrayList<Frame>();
-		this.totalScore = 0;
 		this.frameLine = "| Frame |";
 		this.rollLine = "| Rolls |";
 		this.scoreLine = "| Score |";
+		this.totalScore = 0;
+		this.prevSpare = false;
+		this.prevStrike = false;
 		
 	}
 	
@@ -32,11 +37,11 @@ public class Game {
 		for (Frame f: this.frames) {
 			buildFrameLine(f);
 			buildRollLine(f);
-			//buildScoreLine(f);
+			buildScoreLine(f);
 		}
 		System.out.println(this.frameLine);
 		System.out.println(this.rollLine);
-		
+		System.out.println(this.scoreLine);
 		
 	}
 	
@@ -79,7 +84,31 @@ public class Game {
 		//  throw new InvalidRollException("Your frame object returned an invalid string");
 		//}
 		
+		calculateScore(strike, spare);
 		
+		
+		
+		
+		
+		
+	}
+	
+	private boolean calculateScore(boolean strike, boolean spare) {
+		//if (spare && strike) {
+		//	throw new InvalidRollException("You cannot get a spare and a strike in a single frame");
+		//}
+	
+		if (!spare && !strike) {
+			this.totalScore = this.totalScore + frameScore;
+			
+		} else if (spare) {
+			this.prevSpare = true;
+			this.scoreLine = this.scoreLine+" "+"TBD |";
+		} else if (strike) {
+			this.prevStrike = true;
+			this.scoreLine = this.scoreLine+" "+"TBD |";
+		}
+	
 	}
 	
 	
