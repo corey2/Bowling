@@ -6,10 +6,11 @@ import com.model.Frame;
 import com.model.Game;
 
 public class Bowling {
-	public static void main(String[] args) throws InvalidRollException {
+	public static void main(String[] args) {
 		System.out.println("Welcome to Corey's bowling application!");
 		System.out.println("How to use: Every time you roll the ball, you must enter your score for that roll.");
 		System.out.println("Acceptable Input Values: 1, 2, 3, 4, 5, 6, 7, 8, 9, Miss, Spare, Strike");
+		System.out.println("If you input an unacceptable value, the program will prompt you to re-enter an acceptable value");
 		Scanner console = new Scanner(System.in);
 		Game game = new Game();
 		int f = 1;
@@ -24,28 +25,27 @@ public class Bowling {
 				if (result.matches("-?(0|[1-9]\\d*)")) {
 					int pinsHit = Integer.parseInt(result);
 					if (pinsHit >= 1 && pinsHit <= 9) {
-						frame.addRoll(pinsHit);
-						r++;
+						r = safeRoll(frame, pinsHit, r);
 					} else {
-						System.out.println("The number you input is not between 1 and 9.");
+						System.out.println("The number you entered is not between 1 and 9.");
 					}
 				} else if (result.equalsIgnoreCase("Miss")) {
-					frame.addRoll(0);
-					r++;
+					r = safeRoll(frame, 0, r);
 				} else if (result.equalsIgnoreCase("Strike")) {
 					if (r == 1) {
-						frame.addRoll(10);
-						r++;
+						r = safeRoll(frame, 10, r);
+						r=5; //The while loop is broken and you start the next frame if you get a strike 
 					} else {
 						System.out.println("Your second roll cannot be a strike.");
 					}
 				} else if (result.equalsIgnoreCase("Spare")) {
 					if (r == 2) {
-						frame.addRoll(10);
-						r++;
+						r = safeRoll(frame, 10, r);
 					} else {
 						System.out.println("Your first roll cannot be a spare.");
 					}
+				} else {
+					System.out.println("You did not enter a valid input.");
 				}
 				System.out.println("Pins remaining: "+frame.getPins());
 			}	
@@ -55,5 +55,19 @@ public class Bowling {
 	
 	
 	}
+	
+	
+	//Performs a roll, updates the roll number, and automatically deals with any possible exceptions in one method
+	public static int safeRoll(Frame frame, int pinsHit, int r) {
+		try {
+			frame.addRoll(pinsHit);
+			frame.print();
+			r++;
+		} catch (InvalidRollException e) {
+			System.out.println(e.getMessage());
+		}
+		return r;
+	}
+	
 }
 			
