@@ -22,7 +22,7 @@ public class Bowling {
 				System.out.println("Enter the result of roll "+r);
 				String result = console.nextLine();	
 				//https://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
-				if (result.matches("-?(0|[1-9]\\d*)")) {
+				if (result.matches("-?([1-9]\\d*)")) {
 					int pinsHit = Integer.parseInt(result);
 					if (pinsHit >= 1 && pinsHit <= 9) {
 						r = safeRoll(frame, pinsHit, r);
