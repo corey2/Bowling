@@ -57,8 +57,8 @@ public class Bowling {
 			game.print();
 			f++;
 		}
-		System.out.println("Here is the final score:");
-		game.print();
+		//System.out.println("Here is the final score:");
+		//game.print();
 		console.close();
 	}
 	
