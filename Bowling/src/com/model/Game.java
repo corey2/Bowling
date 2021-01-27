@@ -10,8 +10,9 @@ public class Game {
 	private String rollLine;
 	private String scoreLine;
 	private int totalScore;
-	private boolean prevStrike;
-	private boolean prevSpare;
+	private int calculatedScore;
+	private int strikeCount;
+	private int spareCount;
 	
 	
 	public Game() {
@@ -20,8 +21,9 @@ public class Game {
 		this.rollLine = "| Rolls |";
 		this.scoreLine = "| Score |";
 		this.totalScore = 0;
-		this.prevSpare = false;
-		this.prevStrike = false;
+		this.calculatedScore = 0;
+		this.strikeCount = 0;
+		this.spareCount = 0;
 		
 	}
 	
@@ -83,10 +85,10 @@ public class Game {
 		//  throw new InvalidRollException("Your frame object returned an invalid string");
 		//}
 		
-		if (this.prevStrike) {
+		if (strikeCount > 0) {
 			calculateStrike(f);
 		}
-		if (this.prevSpare) {
+		if (spareCount > 0) {
 			calculateSpare(f);
 		}
 		
@@ -95,17 +97,54 @@ public class Game {
 	}
 	
 	private void calculateStrike(Frame f) {
+		int roll1 = f.getRoll1();
+		int roll2 = f.getRoll2();
+		int bonus = roll1 + roll2;
+		int strikeScore = 30*(this.strikeCount-1);
+		System.out.println("strikeScore: "+strikeScore);
+		System.out.println("calculatedScore: "+this.calculatedScore);
+		System.out.println("totalScore: "+this.totalScore);
+		
+		
 		if (f.getPins() > 0) {
-			int roll1 = f.getRoll1();
-			int roll2 = f.getRoll2();
-			int bonus = roll1 + roll2;
-			System.out.println("You got a strike in the last frame and in this frame you have "+f.getPins()+" pins left standing");
+			//System.out.println("You got a strike in the last frame and in this frame you have "+f.getPins()+" pins left standing");
 			this.totalScore = this.totalScore + bonus;
 			String scoreString = String.valueOf(this.totalScore);
 			this.scoreLine = this.scoreLine.replace("?", scoreString);
-			this.prevStrike = false;
+			this.strikeCount = 0;
 		} else {
-			System.out.println("You knocked down all the pins more than once in a row!");
+			//System.out.println("You knocked down all the pins more than once in a row after a strke!");
+			if (roll1 == 10) {
+				int questionMarkCount = 0;
+				for (int i=0; i<this.scoreLine.length(); i++) {
+					if (this.scoreLine.charAt(i) == '?') {
+						questionMarkCount++;
+					}
+				}
+				System.out.println("Question mark count: "+questionMarkCount);
+				
+				String input = strikeScore+this.calculatedScore+"";
+				if (questionMarkCount >= 2) {
+					this.scoreLine = this.scoreLine.replaceFirst("\\?", input);
+				}
+				
+				/*
+				int frameNumber = f.getFrameNumber();
+				if (frameNumber >= 4) {
+					Frame twoFramesAgo = this.frames.get(frameNumber-4);
+					System.out.println("This frameNumber: "+f.getFrameNumber());
+					System.out.println("Other frameNumber: "+twoFramesAgo.getFrameNumber());
+				}
+				*/
+					
+			} else {
+				//System.out.println("It was a spare");
+				this.totalScore = this.totalScore + bonus;
+				String scoreString = String.valueOf(this.totalScore);
+				this.scoreLine = this.scoreLine.replace("?", scoreString);
+				this.strikeCount = 0;
+				this.spareCount = 1;
+			}
 		}
 		
 	}
@@ -117,9 +156,9 @@ public class Game {
 			System.out.println("You got a spare in the last frame and in this frame you have "+f.getPins()+" pins left standing");		
 			String scoreString = String.valueOf(this.totalScore);
 			this.scoreLine = this.scoreLine.replace("?", scoreString);
-			this.prevSpare = false;
+			this.spareCount = 0;
 		} else {
-			System.out.println("You knocked down all the pins more than once in a row!");
+			System.out.println("You knocked down all the pins more than once in a row after a spare!");
 		}
 	}
 	
@@ -128,20 +167,22 @@ public class Game {
 		//if (spare && strike) {
 		//	throw new InvalidRollException("You cannot get a spare and a strike in a single frame");
 		//}
+		
 		this.totalScore = this.totalScore + frameScore;
 		
 		if (!strike && !spare) {
 			this.scoreLine = this.scoreLine+" "+this.totalScore+" |";
+			this.calculatedScore = this.totalScore;
 		} else {
 			this.scoreLine = this.scoreLine+" "+"? |";
-			System.out.println("Total score after Strike or Spare: "+this.totalScore);
+			//System.out.println("Total score after Strike or Spare: "+this.totalScore);
 		}
 		
 		if (strike) {
-			this.prevStrike = true;
+			this.strikeCount++;
 		} 
 		if (spare) {
-			this.prevSpare = true;
+			this.spareCount++;
 		}
 		
 	}
