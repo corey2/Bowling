@@ -34,36 +34,6 @@ public class Game {
 	}
 	
 	public void print() {
-		/*
-		if (this.frames.get(0) != null) {
-			System.out.println("Here0");
-			buildFrameLine(this.frames.get(0));
-			System.out.println(this.frameLine);
-		}
-		
-		
-		try {
-			if (this.frames.get(1) != null) {
-				System.out.println("Here1");
-				buildFrameLine(this.frames.get(1));
-				System.out.println(this.frameLine);
-			}
-		} catch (IndexOutOfBoundsException e) {
-			System.out.println("Frame 2 doesn't exist yet");
-		}
-		
-		
-		try {
-			if (this.frames.get(2) != null) {
-				System.out.println("Here2");
-				buildFrameLine(this.frames.get(2));
-				System.out.println(this.frameLine);
-			}
-		} catch (IndexOutOfBoundsException e) {
-			System.out.println("Frame 3 doesn't exist yet");
-		}
-		*/
-		
 		int framesSize = this.frames.size();
 		Frame lastFrame = this.frames.get(framesSize-1);
 		buildFrameLine(lastFrame);
@@ -72,17 +42,6 @@ public class Game {
 		System.out.println(this.frameLine);
 		System.out.println(this.rollLine);
 		System.out.println(this.scoreLine);
-		
-		
-		//for (Frame f: this.frames) {
-		//	buildFrameLine(f);
-		//	buildRollLine(f);
-		//	buildScoreLine(f);
-		//}
-		//System.out.println(this.frameLine);
-		//System.out.println(this.rollLine);
-		//System.out.println(this.scoreLine);
-		
 	}
 	
 	private void buildFrameLine(Frame f) {
@@ -140,10 +99,9 @@ public class Game {
 		int roll2 = f.getRoll2();
 		int bonus = roll1 + roll2;
 		this.totalScore = this.totalScore + bonus;
-		System.out.println("In calculate strike method");
-		//System.out.println(this.frameLine);
-		//System.out.println(this.rollLine);
-		//System.out.println(this.scoreLine);
+		String scoreString = String.valueOf(this.totalScore);
+		this.scoreLine = this.scoreLine.replace("?", scoreString);
+		this.prevStrike = false;
 	}
 	
 	private void calculateSpare(Frame f) {
@@ -156,16 +114,18 @@ public class Game {
 		//	throw new InvalidRollException("You cannot get a spare and a strike in a single frame");
 		//}
 		this.totalScore = this.totalScore + frameScore;
+		
+		if (!strike && !spare) {
+			this.scoreLine = this.scoreLine+" "+this.totalScore+" |";
+		} else {
+			this.scoreLine = this.scoreLine+" "+"? |";
+		}
+		
 		if (strike) {
 			this.prevStrike = true;
 		} 
 		if (spare) {
 			this.prevSpare = true;
-		}
-		if (!strike && !spare) {
-			this.scoreLine = this.scoreLine+" "+this.totalScore+" |";
-		} else {
-			this.scoreLine = this.scoreLine+" "+"TBD |";
 		}
 		
 	}

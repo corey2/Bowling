@@ -62,7 +62,7 @@ public class Frame {
 		
 		String score = Integer.toString(10 - this.pins);
 		if (score.equals("10")) {
-			score = "TBD";
+			score = "?";
 		}
 		printRow("Score", score);
 		

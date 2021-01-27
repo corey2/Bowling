@@ -51,6 +51,7 @@ public class Bowling {
 			}	
 			r=1;
 			game.addFrame(frame);
+			//if (f % 2 == 0)
 			System.out.println();
 			System.out.println("Here are the results after Frame "+f);
 			game.print();
