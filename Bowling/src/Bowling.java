@@ -54,7 +54,7 @@ public class Bowling {
 			f++;
 		}
 		game.print();
-	
+		console.close();
 	}
 	
 	

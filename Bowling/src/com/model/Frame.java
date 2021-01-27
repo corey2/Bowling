@@ -91,6 +91,14 @@ public class Frame {
 		return this.frameNumber;
 	}
 	
+	int getRoll1() {
+		return this.roll1;
+	}
+	
+	int getRoll2() {
+		return this.roll2;
+	}
+	
 	String getRoll1Display() {
 		String display = "";
 		if (this.roll1 >= 0) {

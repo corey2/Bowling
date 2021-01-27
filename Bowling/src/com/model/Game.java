@@ -84,32 +84,53 @@ public class Game {
 		//  throw new InvalidRollException("Your frame object returned an invalid string");
 		//}
 		
-		calculateScore(strike, spare);
+		if (this.prevStrike) {
+			calculateStrike(f);
+		}
+		if (this.prevSpare) {
+			calculateSpare(f);
+		}
 		
-		
-		
-		
-		
+		calculateScore(strike, spare, frameScore);
 		
 	}
 	
-	private boolean calculateScore(boolean strike, boolean spare) {
+	private void calculateStrike(Frame f) {
+		int roll1 = f.getRoll1();
+		int roll2 = f.getRoll2();
+		int bonus = roll1 + roll2;
+		this.totalScore = this.totalScore + bonus;
+		System.out.println();
+		System.out.println("In calculate strike method");
+		System.out.println(this.frameLine);
+		System.out.println(this.rollLine);
+		System.out.println(this.scoreLine);
+	}
+	
+	private void calculateSpare(Frame f) {
+		
+	}
+	
+	
+	private void calculateScore(boolean strike, boolean spare, int frameScore) {
 		//if (spare && strike) {
 		//	throw new InvalidRollException("You cannot get a spare and a strike in a single frame");
 		//}
-	
-		if (!spare && !strike) {
-			this.totalScore = this.totalScore + frameScore;
-			
-		} else if (spare) {
-			this.prevSpare = true;
-			this.scoreLine = this.scoreLine+" "+"TBD |";
-		} else if (strike) {
+		this.totalScore = this.totalScore + frameScore;
+		if (strike) {
 			this.prevStrike = true;
+		} 
+		if (spare) {
+			this.prevSpare = true;
+		}
+		if (!strike && !spare) {
+			this.scoreLine = this.scoreLine+" "+this.totalScore+" |";
+		} else {
 			this.scoreLine = this.scoreLine+" "+"TBD |";
 		}
-	
+		
 	}
+	
 	
 	
 }
