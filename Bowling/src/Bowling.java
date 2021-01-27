@@ -51,8 +51,12 @@ public class Bowling {
 			}	
 			r=1;
 			game.addFrame(frame);
+			System.out.println();
+			System.out.println("Here are the results after Frame "+f);
+			game.print();
 			f++;
 		}
+		System.out.println("Here is the final score:");
 		game.print();
 		console.close();
 	}

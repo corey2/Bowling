@@ -34,14 +34,54 @@ public class Game {
 	}
 	
 	public void print() {
-		for (Frame f: this.frames) {
-			buildFrameLine(f);
-			buildRollLine(f);
-			buildScoreLine(f);
+		/*
+		if (this.frames.get(0) != null) {
+			System.out.println("Here0");
+			buildFrameLine(this.frames.get(0));
+			System.out.println(this.frameLine);
 		}
+		
+		
+		try {
+			if (this.frames.get(1) != null) {
+				System.out.println("Here1");
+				buildFrameLine(this.frames.get(1));
+				System.out.println(this.frameLine);
+			}
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Frame 2 doesn't exist yet");
+		}
+		
+		
+		try {
+			if (this.frames.get(2) != null) {
+				System.out.println("Here2");
+				buildFrameLine(this.frames.get(2));
+				System.out.println(this.frameLine);
+			}
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Frame 3 doesn't exist yet");
+		}
+		*/
+		
+		int framesSize = this.frames.size();
+		Frame lastFrame = this.frames.get(framesSize-1);
+		buildFrameLine(lastFrame);
+		buildRollLine(lastFrame);
+		buildScoreLine(lastFrame);
 		System.out.println(this.frameLine);
 		System.out.println(this.rollLine);
 		System.out.println(this.scoreLine);
+		
+		
+		//for (Frame f: this.frames) {
+		//	buildFrameLine(f);
+		//	buildRollLine(f);
+		//	buildScoreLine(f);
+		//}
+		//System.out.println(this.frameLine);
+		//System.out.println(this.rollLine);
+		//System.out.println(this.scoreLine);
 		
 	}
 	
@@ -100,11 +140,10 @@ public class Game {
 		int roll2 = f.getRoll2();
 		int bonus = roll1 + roll2;
 		this.totalScore = this.totalScore + bonus;
-		System.out.println();
 		System.out.println("In calculate strike method");
-		System.out.println(this.frameLine);
-		System.out.println(this.rollLine);
-		System.out.println(this.scoreLine);
+		//System.out.println(this.frameLine);
+		//System.out.println(this.rollLine);
+		//System.out.println(this.scoreLine);
 	}
 	
 	private void calculateSpare(Frame f) {
