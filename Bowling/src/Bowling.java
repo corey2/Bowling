@@ -1,12 +1,9 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.exceptions.InvalidRollException;
 import com.model.Frame;
 import com.model.Game;
 import com.model.LastFrame;
-
-//There is something wrong with getting a spare followed by consecutive strikes
 
 public class Bowling {
 	public static void main(String[] args) {
@@ -111,9 +108,6 @@ public class Bowling {
 			}
 		} else if (result.equalsIgnoreCase("Spare")) {
 			if (r == 2) {
-				if (f==10) {
-					System.out.println("Here0");
-				}
 				r = safeRoll(frame, frame.getPins(), r);
 			} else {
 				System.out.println("Your first roll cannot be a spare.");

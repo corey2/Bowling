@@ -1,8 +1,6 @@
 package com.model;
 import java.util.ArrayList;
 
-import com.exceptions.InvalidRollException;
-
 public class Game {
 	
 	private ArrayList<Frame> frames;
@@ -157,17 +155,7 @@ public class Game {
 				String input = strikeScore+this.calculatedScore+"";
 				if (questionMarkCount >= 2) {
 					this.scoreLine = this.scoreLine.replaceFirst("\\?", input);
-				}
-				
-				/*
-				int frameNumber = f.getFrameNumber();
-				if (frameNumber >= 4) {
-					Frame twoFramesAgo = this.frames.get(frameNumber-4);
-					System.out.println("This frameNumber: "+f.getFrameNumber());
-					System.out.println("Other frameNumber: "+twoFramesAgo.getFrameNumber());
-				}
-				*/
-					
+				}	
 			} else {
 				//System.out.println("It was a spare");
 				this.totalScore = this.totalScore + bonus;
@@ -235,13 +223,13 @@ public class Game {
 	}
 	
 	private void calculateFinalScore(LastFrame lf) {
-		System.out.println("Total Score Before: "+this.totalScore);
+		//System.out.println("Total Score Before: "+this.totalScore);
 		String roll1Display = lf.getRoll1Display();
 		String roll2Display = lf.getRoll2Display();
 		String roll3Display = lf.getRoll3Display();
 		int frameScore = convertDisplayToInt(roll1Display) + convertDisplayToInt(roll2Display) + convertDisplayToInt(roll3Display);
 		this.totalScore = this.totalScore + frameScore;
-		System.out.println("Total Score After: "+this.totalScore);
+		//System.out.println("Total Score After: "+this.totalScore);
 		
 		this.scoreLine = this.scoreLine+" "+this.totalScore+" |";
 		

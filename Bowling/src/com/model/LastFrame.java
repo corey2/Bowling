@@ -58,9 +58,7 @@ public class LastFrame extends Frame {
 	public boolean qualify() {
 		//System.out.println("In qualify method");
 		if (this.roll1 == 10 || this.roll1 + this.roll2 == 10) { //You got a strike on the first roll or a spare on the second roll
-			System.out.println("Check1");
 			if (this.roll3 < 0) {  //You haven't done your third roll yet
-				System.out.println("Check2");
 				return true;
 			}
 		}
