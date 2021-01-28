@@ -54,11 +54,24 @@ public class Game {
 	private void buildRollLine(Frame f) {
 		String roll1Display = f.getRoll1Display();
 		String roll2Display = f.getRoll2Display();
-		this.rollLine = this.rollLine+" "+roll1Display+" "+roll2Display+" |";
+		
+		if (f.getClass() == Frame.class) { 
+			this.rollLine = this.rollLine+" "+roll1Display+" "+roll2Display+" |";
+		}
+		
 		if (f.getClass() == LastFrame.class) {
 			LastFrame lf = (LastFrame) f;
 			String roll3Display = lf.getRoll3Display();
-			this.rollLine = this.rollLine+ " "+roll3Display+" |";
+			
+			if (lf.roll1 == 10 && lf.roll2 == 10) {
+				roll2Display = "X";
+			}
+			
+			if (!lf.qualify()) {
+				roll3Display = "-";
+			}
+			
+			this.rollLine = this.rollLine+ " "+roll1Display+" "+roll2Display+" "+roll3Display+ " |";
 		}
 			
 	}
@@ -97,14 +110,18 @@ public class Game {
 		if (spareCount > 0) {
 			calculateSpare(f);
 		}
-		calculateScore(strike, spare, frameScore);
+		
+		if (f.getClass() == Frame.class) {
+			calculateScore(strike, spare, frameScore);
+		}
 			
 		if (f.getClass() == LastFrame.class) {
+			
 			LastFrame lf = (LastFrame) f;
-			if (lf.roll3 >= 0) {
-				System.out.println("Add last frame to score line");
+			if (lf.roll3 < 0 && strikeCount == 0) {
+				calculateScore(strike, spare, frameScore);
 			} else {
-				System.out.println("There was no bonus round so I don't need to update the lines");
+				//calculateFinalScore()
 			}
 		}
 	}
@@ -195,6 +212,9 @@ public class Game {
 		//}
 		
 		this.totalScore = this.totalScore + frameScore;
+		
+		System.out.println("Frame Score: "+frameScore);
+		System.out.println("Total Score: "+this.totalScore);
 		
 		if (!strike && !spare) {
 			this.scoreLine = this.scoreLine+" "+this.totalScore+" |";

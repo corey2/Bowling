@@ -6,6 +6,8 @@ import com.model.Frame;
 import com.model.Game;
 import com.model.LastFrame;
 
+//There is something wrong with getting a spare followed by consecutive strikes
+
 public class Bowling {
 	public static void main(String[] args) {
 		System.out.println("Welcome to Corey's bowling application!");
@@ -50,10 +52,18 @@ public class Bowling {
 					}
 				} else if (result.equalsIgnoreCase("Miss")) {
 					System.out.println("Final Miss");
-				} else if (result.equalsIgnoreCase("Strike")) {
-					System.out.println("Final Strike");
-					lastFrame.print();
-				} else if (result.equalsIgnoreCase("Spare")) {
+					try {
+						lastFrame.addRoll(0);
+					} catch (InvalidRollException e) {
+						System.out.println(e.getMessage());
+					}
+				} else if (result.equalsIgnoreCase("Strike") || result.equalsIgnoreCase("Spare")) {
+					System.out.println("Final Strike or Spare");
+					try {
+						lastFrame.addRoll(10);
+					} catch (InvalidRollException e) {
+						System.out.println(e.getMessage());
+					}
 				} else {
 					System.out.println("You did not enter a valid input.");
 				}
@@ -91,8 +101,6 @@ public class Bowling {
 				r = safeRoll(frame, 10, r);
 				if (f!=10) {  //If you are not already on the last frame...
 					r=3; //..you start the next frame if you get a strike 
-				} else {
-					System.out.println("I rolled my first strike in frame 10");
 				}
 			} else {
 				if (f!=10) {
