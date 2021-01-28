@@ -37,7 +37,16 @@ public class Bowling {
 		System.out.println("lastFrame.getFrameNumber() = "+lastFrame.getFrameNumber());
 		
 		while (r<=3) {
-			
+			if (r<3) {
+				r = doBusinessLogic(lastFrame, f, r, console);
+			} else {  //r==3
+				System.out.println("Enter the result of your bonus roll");
+				String result = console.nextLine();
+				
+				try {
+					lastFrame.addRoll
+				}
+			}
 		}
 		
 		console.close();
@@ -60,7 +69,7 @@ public class Bowling {
 		} else if (result.equalsIgnoreCase("Strike")) {
 			if (r == 1) {
 				r = safeRoll(frame, 10, r);
-				r=5; //The while loop is broken and you start the next frame if you get a strike 
+				r=3; //The while loop is broken and you start the next frame if you get a strike 
 			} else {
 				System.out.println("Your second roll cannot be a strike.");
 			}
