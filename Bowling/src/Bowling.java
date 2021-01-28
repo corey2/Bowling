@@ -34,18 +34,25 @@ public class Bowling {
 		//game.print();
 		System.out.println("Final Frame: "+f);
 		LastFrame lastFrame = new LastFrame();
-		System.out.println("lastFrame.getFrameNumber() = "+lastFrame.getFrameNumber());
 		
 		while (r<=3) {
 			if (r<3) {
 				r = doBusinessLogic(lastFrame, f, r, console);
-			} else {  //r==3
+			} else if (lastFrame.qualify()) {  //r==3
 				System.out.println("Enter the result of your bonus roll");
 				String result = console.nextLine();
-				
-				try {
-					lastFrame.addRoll
+				if (result.matches("-?([1-9]\\d*)")) {
+					int pinsHit = Integer.parseInt(result);
+					if (pinsHit >= 1 && pinsHit <= 9) {
+						r = safeRoll(lastFrame, pinsHit, r);
+					} else {
+						System.out.println("The number you entered is not between 1 and 9.");
+					}
 				}
+				System.out.println("You finished the game and the bonus round");
+			} else {
+				System.out.println("You finished the game and did not qualify for the bonus round");
+				r++;
 			}
 		}
 		
@@ -69,7 +76,10 @@ public class Bowling {
 		} else if (result.equalsIgnoreCase("Strike")) {
 			if (r == 1) {
 				r = safeRoll(frame, 10, r);
-				r=3; //The while loop is broken and you start the next frame if you get a strike 
+				r=3; //You start the next frame if you get a strike 
+				if (f==10) {  //Unless you are on the last frame
+					r++;
+				}
 			} else {
 				System.out.println("Your second roll cannot be a strike.");
 			}

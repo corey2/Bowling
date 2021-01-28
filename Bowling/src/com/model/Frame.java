@@ -29,12 +29,12 @@ public class Frame {
 	public void addRoll(int pinsHit) throws InvalidRollException {
 		if (this.pins > 0) {
 			int safetyPins = this.pins;
-			if (roll1 < 0) {
+			if (this.roll1 < 0) {
 				this.roll1 = pinsHit;
 				this.pins = this.pins - pinsHit;
 				checkPins(1, safetyPins);
 				
-			} else if (roll2 < 0) {
+			} else if (this.roll2 < 0) {
 				this.roll2 = pinsHit;
 				this.pins = this.pins - pinsHit;
 				checkPins(2, safetyPins);
