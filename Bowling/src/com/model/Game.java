@@ -26,27 +26,27 @@ public class Game {
 	}
 	
 	public void addFrame(Frame frame) {
-		this.frames.add(frame);
-		int framesSize = this.frames.size();
-		Frame latestFrame = this.frames.get(framesSize-1);
+		frames.add(frame);
+		int framesSize = frames.size();
+		Frame latestFrame = frames.get(framesSize-1);
 		buildFrameLine(latestFrame);
 		buildRollLine(latestFrame);
 		buildScoreLine(latestFrame);
 	}
 	
 	public int getTotalScore() {
-		return this.totalScore;
+		return totalScore;
 	}
 	
 	public void print() {
-		System.out.println(this.frameLine);
-		System.out.println(this.rollLine);
-		System.out.println(this.scoreLine);
+		System.out.println(frameLine);
+		System.out.println(rollLine);
+		System.out.println(scoreLine);
 	}
 	
 	private void buildFrameLine(Frame f) {
 		int frameNumber = f.frameNumber;
-		this.frameLine = this.frameLine+" "+frameNumber+" |";
+		frameLine = frameLine+" "+frameNumber+" |";
 	}
 	
 	private void buildRollLine(Frame f) {
@@ -54,13 +54,13 @@ public class Game {
 		String roll2Display = f.getRoll2Display();
 		
 		if (f.getClass() == Frame.class) { 
-			this.rollLine = this.rollLine+" "+roll1Display+" "+roll2Display+" |";
+			rollLine = rollLine+" "+roll1Display+" "+roll2Display+" |";
 		}
 		
 		if (f.getClass() == LastFrame.class) {
 			LastFrame lf = (LastFrame) f;
 			String roll3Display = lf.getRoll3Display();
-			System.out.println("roll3Display: "+roll3Display);
+			//System.out.println("roll3Display: "+roll3Display);
 			
 			if (lf.roll1 == 10 && lf.roll2 == 10) {
 				roll2Display = "X";
@@ -71,7 +71,7 @@ public class Game {
 			//}
 			
 			
-			this.rollLine = this.rollLine+ " "+roll1Display+" "+roll2Display+" "+roll3Display+ " |";
+			rollLine = rollLine+" "+roll1Display+" "+roll2Display+" "+roll3Display+ " |";
 		}
 			
 	}
@@ -129,10 +129,10 @@ public class Game {
 		int roll1 = f.getRoll1();
 		int roll2 = f.getRoll2();
 		int bonus = roll1 + roll2;
-		int strikeScore = 30*(this.strikeCount-1);
+		int strikeScore = 30*(strikeCount-1);
 		//System.out.println("strikeScore: "+strikeScore);
-		//System.out.println("calculatedScore: "+this.calculatedScore);
-		//System.out.println("totalScore: "+this.totalScore);
+		//System.out.println("calculatedScore: "+calculatedScore);
+		//System.out.println("totalScore: "+totalScore);
 		
 		
 		if (f.getPins() > 0) {
@@ -145,23 +145,23 @@ public class Game {
 			//System.out.println("You knocked down all the pins more than once in a row after a strke!");
 			if (roll1 == 10) {
 				int questionMarkCount = 0;
-				for (int i=0; i<this.scoreLine.length(); i++) {
-					if (this.scoreLine.charAt(i) == '?') {
+				for (int i=0; i<scoreLine.length(); i++) {
+					if (scoreLine.charAt(i) == '?') {
 						questionMarkCount++;
 					}
 				}
 				//System.out.println("Question mark count: "+questionMarkCount);
 				
-				String input = strikeScore+this.calculatedScore+"";
+				String input = strikeScore+calculatedScore+"";
 				if (questionMarkCount >= 2) {
-					this.scoreLine = this.scoreLine.replaceFirst("\\?", input);
+					scoreLine = scoreLine.replaceFirst("\\?", input);
 				}	
 			} else {
 				//System.out.println("It was a spare");
-				this.totalScore = this.totalScore + bonus;
-				String scoreString = String.valueOf(this.totalScore);
-				this.scoreLine = this.scoreLine.replace("?", scoreString);
-				this.strikeCount = 0;
+				totalScore = totalScore + bonus;
+				String scoreString = String.valueOf(totalScore);
+				scoreLine = scoreLine.replace("?", scoreString);
+				strikeCount = 0;
 				//this.spareCount = 1;
 			}
 		}
@@ -171,25 +171,25 @@ public class Game {
 	private void calculateSpare(Frame f) {
 		int roll1 = f.getRoll1();
 		if (f.getPins() > 0) {
-			this.totalScore = this.totalScore + roll1;
+			totalScore = totalScore + roll1;
 			//System.out.println("You got a spare in the previous frame and in this frame you have "+f.getPins()+" pins left standing");		
 			String scoreString = String.valueOf(this.totalScore);
-			this.scoreLine = this.scoreLine.replace("?", scoreString);
-			this.spareCount = 0;
+			scoreLine = scoreLine.replace("?", scoreString);
+			spareCount = 0;
 		} else {
 			//System.out.println("You knocked down all the pins more than once in a row after a spare!");
 			if (roll1 == 10) {
 				//System.out.println("It was a strike");
-				this.totalScore = this.totalScore + roll1;
+				totalScore = totalScore + roll1;
 				String scoreString = String.valueOf(this.totalScore);
-				this.scoreLine = this.scoreLine.replace("?", scoreString);
-				this.spareCount = 0;
+				scoreLine = scoreLine.replace("?", scoreString);
+				spareCount = 0;
 				//this.strikeCount = 1;
 			} else {
 				//System.out.println("It was a spare");
-				this.totalScore = this.totalScore + roll1;
+				totalScore = totalScore + roll1;
 				String scoreString = String.valueOf(this.totalScore);
-				this.scoreLine = this.scoreLine.replace("?", scoreString);
+				scoreLine = scoreLine.replace("?", scoreString);
 			}
 		}
 	}
@@ -200,24 +200,24 @@ public class Game {
 		//	throw new InvalidRollException("You cannot get a spare and a strike in a single frame");
 		//}
 		
-		this.totalScore = this.totalScore + frameScore;
+		totalScore = totalScore + frameScore;
 		
 		//System.out.println("Frame Score: "+frameScore);
 		//System.out.println("Total Score: "+this.totalScore);
 		
 		if (!strike && !spare) {
-			this.scoreLine = this.scoreLine+" "+this.totalScore+" |";
-			this.calculatedScore = this.totalScore;
+			scoreLine = scoreLine+" "+totalScore+" |";
+			calculatedScore = totalScore;
 		} else {
-			this.scoreLine = this.scoreLine+" "+"? |";
+			scoreLine = scoreLine+" "+"? |";
 			//System.out.println("Total score after Strike or Spare: "+this.totalScore);
 		}
 		
 		if (strike) {
-			this.strikeCount++;
+			strikeCount++;
 		} 
 		if (spare) {
-			this.spareCount++;
+			spareCount++;
 		}
 		
 	}
@@ -228,10 +228,10 @@ public class Game {
 		String roll2Display = lf.getRoll2Display();
 		String roll3Display = lf.getRoll3Display();
 		int frameScore = convertDisplayToInt(roll1Display) + convertDisplayToInt(roll2Display) + convertDisplayToInt(roll3Display);
-		this.totalScore = this.totalScore + frameScore;
+		totalScore = totalScore + frameScore;
 		//System.out.println("Total Score After: "+this.totalScore);
 		
-		this.scoreLine = this.scoreLine+" "+this.totalScore+" |";
+		scoreLine = scoreLine+" "+totalScore+" |";
 		
 		
 	}

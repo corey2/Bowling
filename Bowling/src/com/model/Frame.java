@@ -26,15 +26,15 @@ public class Frame {
 	}
 	
 	public void addRoll(int pinsHit) throws InvalidRollException {
-		if (this.pins > 0) {
-			int safetyPins = this.pins;
-			if (this.roll1 < 0) {
-				this.roll1 = pinsHit;
-				this.pins = this.pins - pinsHit;
+		if (pins > 0) {
+			int safetyPins = pins;
+			if (roll1 < 0) {
+				roll1 = pinsHit;
+				pins = pins - pinsHit;
 				checkPins(1, safetyPins);
-			} else if (this.roll2 < 0) {
-				this.roll2 = pinsHit;
-				this.pins = this.pins - pinsHit;
+			} else if (roll2 < 0) {
+				roll2 = pinsHit;
+				pins = pins - pinsHit;
 				checkPins(2, safetyPins);
 			} else {
 				throw new InvalidRollException("You can't roll the ball more than twice per frame");
@@ -46,28 +46,28 @@ public class Frame {
 	}
 	
 	public int getPins() {
-		return this.pins;
+		return pins;
 	}
 	
 	public int getFrameNumber() {
-		return this.frameNumber;
+		return frameNumber;
 	}
 	
 	public void print() {
 		System.out.println("Frame Progress");
-		printRow("Frame", Integer.toString(this.frameNumber));
+		printRow("Frame", Integer.toString(frameNumber));
 		
 		String roll1Display = getRoll1Display();
 		String roll2Display = getRoll2Display();
 		String rolls = roll1Display + " " + roll2Display;
 		printRow("Rolls", rolls);
 		
-		String score = Integer.toString(10 - this.pins);
+		String score = Integer.toString(10 - pins);
 		if (score.equals("10")) {
 			score = "?";
 		}
 		printRow("Score", score);
-		System.out.println("Pins remaining: "+this.getPins());
+		System.out.println("Pins remaining: "+getPins());
 		
 	}
 	
@@ -78,35 +78,35 @@ public class Frame {
 	
 	//If the number of pins falls below 0, this method will undo the roll and throw an exception.
 	void checkPins(int roll, int safetyPins) throws InvalidRollException {
-		if (this.pins < 0) {
-			this.pins = safetyPins;
+		if (pins < 0) {
+			pins = safetyPins;
 			if (roll == 1) {
-				this.roll1 = -1;
+				roll1 = -1;
 			}
 			if (roll == 2) {
-				this.roll2 = -1;
+				roll2 = -1;
 			}
 			throw new InvalidRollException("You can't knock down more than 10 pins per frame");
 		}
 	}
 	
 	protected int getRoll1() {
-		return this.roll1;
+		return roll1;
 	}
 	
 	protected int getRoll2() {
-		return this.roll2;
+		return roll2;
 	}
 	
 	protected String getRoll1Display() {
 		String display = "";
-		if (this.roll1 >= 0) {
-			if (this.roll1 == 0) {  //First roll miss
+		if (roll1 >= 0) {
+			if (roll1 == 0) {  //First roll miss
 				display = "-";
-			} else if (this.roll1 == 10) {  //Strike
+			} else if (roll1 == 10) {  //Strike
 				display = "X";
 			} else {  //First Roll 1-9
-				display = this.roll1+"";
+				display = roll1+"";
 			}
 		}
 		return display;
@@ -114,18 +114,18 @@ public class Frame {
 	
 	protected String getRoll2Display() {
 		String display = "";
-		if (this.roll2 >= 0) {
+		if (roll2 >= 0) {
 			//System.out.println("Print Check:");
 			//System.out.println(this.roll2);
 			//System.out.println(this.pins);
-			if (this.roll2 == 0) {  //Second roll miss
+			if (roll2 == 0) {  //Second roll miss
 				display = "-";
-			} else if (this.pins == 0) {  //Spare
+			} else if (pins == 0) {  //Spare
 				display = "/";
-			} else if (this.getClass() == LastFrame.class && this.pins == 10) {
+			} else if (getClass() == LastFrame.class && pins == 10) {
 				display = "X";
 			} else {  //Second Roll 1-9
-				display = this.roll2+"";
+				display = roll2+"";
 			}
 		}
 		return display;
