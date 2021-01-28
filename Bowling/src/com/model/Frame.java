@@ -5,10 +5,10 @@ import com.exceptions.InvalidRollException;
 
 public class Frame {
 	
-	int frameNumber;
-	int roll1;
-	int roll2;
-	int pins;
+	protected int frameNumber;
+	protected int roll1;
+	protected int roll2;
+	protected int pins;
 	
 	
 	public Frame() {
@@ -56,6 +56,7 @@ public class Frame {
 	}
 	
 	public void print() {
+		System.out.println("Frame Progress");
 		printRow("Frame", Integer.toString(this.frameNumber));
 		
 		String roll1Display = getRoll1Display();

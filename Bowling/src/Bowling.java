@@ -30,8 +30,6 @@ public class Bowling {
 			game.print();
 			f++;
 		}
-		//System.out.println("Here is the final score:");
-		//game.print();
 		System.out.println("Final Frame: "+f);
 		LastFrame lastFrame = new LastFrame();
 		
@@ -48,6 +46,12 @@ public class Bowling {
 					} else {
 						System.out.println("The number you entered is not between 1 and 9.");
 					}
+				} else if (result.equalsIgnoreCase("Miss")) {
+					System.out.println("Final Miss");
+				} else if (result.equalsIgnoreCase("Strike")) {
+					System.out.println("Final Strike");
+				} else {
+					System.out.println("You did not enter a valid input.");
 				}
 				System.out.println("You finished the game and the bonus round");
 			} else {
@@ -56,6 +60,10 @@ public class Bowling {
 			}
 		}
 		
+		game.addFrame(lastFrame);
+		System.out.println();
+		System.out.println("Here is the final score:");
+		game.print();
 		console.close();
 	}
 	

@@ -28,10 +28,12 @@ public class Game {
 	}
 	
 	public void addFrame(Frame frame) {
-		int rollBlah = frame.roll1;
-		System.out.println(rollBlah);
 		this.frames.add(frame);
-		
+		int framesSize = this.frames.size();
+		Frame latestFrame = this.frames.get(framesSize-1);
+		buildFrameLine(latestFrame);
+		buildRollLine(latestFrame);
+		buildScoreLine(latestFrame);
 	}
 	
 	public int getTotalScore() {
@@ -39,11 +41,6 @@ public class Game {
 	}
 	
 	public void print() {
-		int framesSize = this.frames.size();
-		Frame lastFrame = this.frames.get(framesSize-1);
-		buildFrameLine(lastFrame);
-		buildRollLine(lastFrame);
-		buildScoreLine(lastFrame);
 		System.out.println(this.frameLine);
 		System.out.println(this.rollLine);
 		System.out.println(this.scoreLine);
@@ -94,9 +91,16 @@ public class Game {
 		if (spareCount > 0) {
 			calculateSpare(f);
 		}
-		
 		calculateScore(strike, spare, frameScore);
-		
+			
+		if (f.getClass() == LastFrame.class) {
+			LastFrame lf = (LastFrame) f;
+			if (lf.roll3 >= 0) {
+				System.out.println("Add last frame to score line");
+			} else {
+				System.out.println("There was no bonus round so I don't need to update the lines");
+			}
+		}
 	}
 	
 	private void calculateStrike(Frame f) {

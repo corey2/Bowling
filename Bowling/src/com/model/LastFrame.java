@@ -4,7 +4,7 @@ import com.exceptions.InvalidRollException;
 
 public class LastFrame extends Frame {
 	
-	private int roll3;
+	protected int roll3;
 	
 	public LastFrame() {
 		super(10);
@@ -27,6 +27,9 @@ public class LastFrame extends Frame {
 				checkPins(2, safetyPins);
 			} else if (this.qualify()) {
 				System.out.println("I made it to the bonus round in the last frame");
+				this.roll3 = pinsHit;
+				this.pins = this.pins - pins;
+				
 			} else {
 				throw new InvalidRollException("You did not qualify for the bonus round");
 			}
