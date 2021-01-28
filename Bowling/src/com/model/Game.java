@@ -143,15 +143,15 @@ public class Game {
 				String scoreString = String.valueOf(this.totalScore);
 				this.scoreLine = this.scoreLine.replace("?", scoreString);
 				this.strikeCount = 0;
-				this.spareCount = 1;
+				//this.spareCount = 1;
 			}
 		}
 		
 	}
 	
 	private void calculateSpare(Frame f) {
+		int roll1 = f.getRoll1();
 		if (f.getPins() > 0) {
-			int roll1 = f.getRoll1();
 			this.totalScore = this.totalScore + roll1;
 			System.out.println("You got a spare in the last frame and in this frame you have "+f.getPins()+" pins left standing");		
 			String scoreString = String.valueOf(this.totalScore);
@@ -159,6 +159,19 @@ public class Game {
 			this.spareCount = 0;
 		} else {
 			System.out.println("You knocked down all the pins more than once in a row after a spare!");
+			if (roll1 == 10) {
+				System.out.println("It was a strike");
+				this.totalScore = this.totalScore + roll1;
+				String scoreString = String.valueOf(this.totalScore);
+				this.scoreLine = this.scoreLine.replace("?", scoreString);
+				this.spareCount = 0;
+				//this.strikeCount = 1;
+			} else {
+				System.out.println("It was a spare");
+				this.totalScore = this.totalScore + roll1;
+				String scoreString = String.valueOf(this.totalScore);
+				this.scoreLine = this.scoreLine.replace("?", scoreString);
+			}
 		}
 	}
 	
