@@ -50,12 +50,10 @@ public class LastFrame extends Frame {
 	
 	//Checks whether the player qualifies for the bonus round
 	public boolean qualify() {
-		//System.out.println("In qualify method");
-		if (this.roll1 >= 0) {  //You completed the first roll
-			if (this.roll1 == 10 || this.pins == 0 && this.roll2 >= 0) {  //You got a strike or a spare
-				if (this.roll3 < 0) {  //You haven't already finished the bonus round
-					return true;
-				}
+		System.out.println("In qualify method");
+		if (this.roll1 == 10 || this.roll2 == 10) { //You got a strike on the first roll or a spare on the second roll
+			if (this.roll3 < 0) {  //You haven't done your third roll yet
+				return true;
 			}
 		}
 		return false;

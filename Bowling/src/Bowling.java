@@ -111,6 +111,9 @@ public class Bowling {
 			}
 		} else if (result.equalsIgnoreCase("Spare")) {
 			if (r == 2) {
+				if (f==10) {
+					System.out.println("Here0");
+				}
 				r = safeRoll(frame, frame.getPins(), r);
 			} else {
 				System.out.println("Your first roll cannot be a spare.");
@@ -118,7 +121,6 @@ public class Bowling {
 		} else {
 			System.out.println("You did not enter a valid input.");
 		}
-		System.out.println("Pins remaining: "+frame.getPins());
 		return r;
 	}
 	

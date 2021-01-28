@@ -68,6 +68,7 @@ public class Frame {
 			score = "?";
 		}
 		printRow("Score", score);
+		System.out.println("Pins remaining: "+this.getPins());
 		
 	}
 	

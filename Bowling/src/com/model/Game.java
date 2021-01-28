@@ -62,14 +62,16 @@ public class Game {
 		if (f.getClass() == LastFrame.class) {
 			LastFrame lf = (LastFrame) f;
 			String roll3Display = lf.getRoll3Display();
+			System.out.println("roll3Display: "+roll3Display);
 			
 			if (lf.roll1 == 10 && lf.roll2 == 10) {
 				roll2Display = "X";
 			}
 			
-			if (!lf.qualify()) {
-				roll3Display = "-";
-			}
+			//if (!lf.qualify() && !roll3Display.equals("X") && !roll3Display.equals("/")) {
+			//	roll3Display = "N/A";
+			//}
+			
 			
 			this.rollLine = this.rollLine+ " "+roll1Display+" "+roll2Display+" "+roll3Display+ " |";
 		}
@@ -116,12 +118,11 @@ public class Game {
 		}
 			
 		if (f.getClass() == LastFrame.class) {
-			
 			LastFrame lf = (LastFrame) f;
-			if (lf.roll3 < 0 && strikeCount == 0) {
+			if (lf.roll3 < 0) {
 				calculateScore(strike, spare, frameScore);
 			} else {
-				//calculateFinalScore()
+				calculateFinalScore(lf);
 			}
 		}
 	}
@@ -151,7 +152,7 @@ public class Game {
 						questionMarkCount++;
 					}
 				}
-				System.out.println("Question mark count: "+questionMarkCount);
+				//System.out.println("Question mark count: "+questionMarkCount);
 				
 				String input = strikeScore+this.calculatedScore+"";
 				if (questionMarkCount >= 2) {
@@ -173,7 +174,7 @@ public class Game {
 				String scoreString = String.valueOf(this.totalScore);
 				this.scoreLine = this.scoreLine.replace("?", scoreString);
 				this.strikeCount = 0;
-				//this.spareCount = 1;
+				this.spareCount = 1;
 			}
 		}
 		
@@ -183,21 +184,21 @@ public class Game {
 		int roll1 = f.getRoll1();
 		if (f.getPins() > 0) {
 			this.totalScore = this.totalScore + roll1;
-			System.out.println("You got a spare in the last frame and in this frame you have "+f.getPins()+" pins left standing");		
+			//System.out.println("You got a spare in the previous frame and in this frame you have "+f.getPins()+" pins left standing");		
 			String scoreString = String.valueOf(this.totalScore);
 			this.scoreLine = this.scoreLine.replace("?", scoreString);
 			this.spareCount = 0;
 		} else {
-			System.out.println("You knocked down all the pins more than once in a row after a spare!");
+			//System.out.println("You knocked down all the pins more than once in a row after a spare!");
 			if (roll1 == 10) {
-				System.out.println("It was a strike");
+				//System.out.println("It was a strike");
 				this.totalScore = this.totalScore + roll1;
 				String scoreString = String.valueOf(this.totalScore);
 				this.scoreLine = this.scoreLine.replace("?", scoreString);
 				this.spareCount = 0;
-				//this.strikeCount = 1;
+				this.strikeCount = 1;
 			} else {
-				System.out.println("It was a spare");
+				//System.out.println("It was a spare");
 				this.totalScore = this.totalScore + roll1;
 				String scoreString = String.valueOf(this.totalScore);
 				this.scoreLine = this.scoreLine.replace("?", scoreString);
@@ -213,8 +214,8 @@ public class Game {
 		
 		this.totalScore = this.totalScore + frameScore;
 		
-		System.out.println("Frame Score: "+frameScore);
-		System.out.println("Total Score: "+this.totalScore);
+		//System.out.println("Frame Score: "+frameScore);
+		//System.out.println("Total Score: "+this.totalScore);
 		
 		if (!strike && !spare) {
 			this.scoreLine = this.scoreLine+" "+this.totalScore+" |";
@@ -231,6 +232,34 @@ public class Game {
 			this.spareCount++;
 		}
 		
+	}
+	
+	private void calculateFinalScore(LastFrame lf) {
+		System.out.println("Total Score Before: "+this.totalScore);
+		String roll1Display = lf.getRoll1Display();
+		String roll2Display = lf.getRoll2Display();
+		String roll3Display = lf.getRoll3Display();
+		int frameScore = convertDisplayToInt(roll1Display) + convertDisplayToInt(roll2Display) + convertDisplayToInt(roll3Display);
+		this.totalScore = this.totalScore + frameScore;
+		System.out.println("Total Score After: "+this.totalScore);
+		
+		this.scoreLine = this.scoreLine+" "+this.totalScore+" |";
+		
+		
+	}
+	
+	private int convertDisplayToInt(String display) {
+		int score;
+		if (display.matches("-?([1-9]\\d*)")) {
+			score = Integer.parseInt(display);
+		} else if (display.equals("X") || display.equals("/")) {
+			score = 10;
+		} else if (display.equals("-")) {
+			score = 0;
+		} else { //Something went wrong
+			score = -1;
+		}
+		return score;
 	}
 	
 	
