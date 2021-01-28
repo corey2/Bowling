@@ -5,10 +5,10 @@ import com.exceptions.InvalidRollException;
 
 public class Frame {
 	
-	protected int frameNumber;
-	protected int roll1;
-	protected int roll2;
-	protected int pins;
+	int frameNumber;
+	int roll1;
+	int roll2;
+	int pins;
 	
 	
 	public Frame() {
@@ -33,7 +33,6 @@ public class Frame {
 				this.roll1 = pinsHit;
 				this.pins = this.pins - pinsHit;
 				checkPins(1, safetyPins);
-				
 			} else if (this.roll2 < 0) {
 				this.roll2 = pinsHit;
 				this.pins = this.pins - pinsHit;
@@ -91,15 +90,15 @@ public class Frame {
 		}
 	}
 	
-	int getRoll1() {
+	protected int getRoll1() {
 		return this.roll1;
 	}
 	
-	int getRoll2() {
+	protected int getRoll2() {
 		return this.roll2;
 	}
 	
-	String getRoll1Display() {
+	protected String getRoll1Display() {
 		String display = "";
 		if (this.roll1 >= 0) {
 			if (this.roll1 == 0) {  //First roll miss
@@ -113,7 +112,7 @@ public class Frame {
 		return display;
 	}
 	
-	String getRoll2Display() {
+	protected String getRoll2Display() {
 		String display = "";
 		if (this.roll2 >= 0) {
 			//System.out.println("Print Check:");
@@ -123,6 +122,8 @@ public class Frame {
 				display = "-";
 			} else if (this.pins == 0) {  //Spare
 				display = "/";
+			} else if (this.getClass() == LastFrame.class && this.pins == 10) {
+				display = "X";
 			} else {  //Second Roll 1-9
 				display = this.roll2+"";
 			}

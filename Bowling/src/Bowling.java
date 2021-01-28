@@ -34,8 +34,10 @@ public class Bowling {
 		LastFrame lastFrame = new LastFrame();
 		
 		while (r<=3) {
+			//System.out.println("R before: "+r);
 			if (r<3) {
 				r = doBusinessLogic(lastFrame, f, r, console);
+				//System.out.println("R after: "+r);
 			} else if (lastFrame.qualify()) {  //r==3
 				System.out.println("Enter the result of your bonus roll");
 				String result = console.nextLine();
@@ -50,10 +52,13 @@ public class Bowling {
 					System.out.println("Final Miss");
 				} else if (result.equalsIgnoreCase("Strike")) {
 					System.out.println("Final Strike");
+					lastFrame.print();
+				} else if (result.equalsIgnoreCase("Spare")) {
 				} else {
 					System.out.println("You did not enter a valid input.");
 				}
 				System.out.println("You finished the game and the bonus round");
+				r++;
 			} else {
 				System.out.println("You finished the game and did not qualify for the bonus round");
 				r++;
@@ -84,12 +89,17 @@ public class Bowling {
 		} else if (result.equalsIgnoreCase("Strike")) {
 			if (r == 1) {
 				r = safeRoll(frame, 10, r);
-				r=3; //You start the next frame if you get a strike 
-				if (f==10) {  //Unless you are on the last frame
-					r++;
+				if (f!=10) {  //If you are not already on the last frame...
+					r=3; //..you start the next frame if you get a strike 
+				} else {
+					System.out.println("I rolled my first strike in frame 10");
 				}
 			} else {
-				System.out.println("Your second roll cannot be a strike.");
+				if (f!=10) {
+					System.out.println("Your second roll cannot be a strike.");
+				} else {
+					r = safeRoll(frame, 10, r);
+				}
 			}
 		} else if (result.equalsIgnoreCase("Spare")) {
 			if (r == 2) {

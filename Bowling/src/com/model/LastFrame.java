@@ -18,18 +18,28 @@ public class LastFrame extends Frame {
 				this.roll1 = pinsHit;
 				this.pins = this.pins - pinsHit;
 				checkPins(1, safetyPins);
-			} else if (this.roll2 < 0 || this.roll1 == 10) {
-				if (roll1 == 10) {
+				if (this.pins == 0) {  //Reset the pins after rolling the first strike
 					this.pins = 10;
 				}
+			} else if (this.roll2 < 0) {
 				this.roll2 = pinsHit;
 				this.pins = this.pins - pinsHit;
 				checkPins(2, safetyPins);
+				if (this.pins == 0) {  //Reset the pins after rolling the second strike or spare
+					this.pins = 10;
+				}
 			} else if (this.qualify()) {
 				System.out.println("I made it to the bonus round in the last frame");
 				this.roll3 = pinsHit;
-				this.pins = this.pins - pins;
+				this.pins = this.pins - pinsHit;
 				
+				//Special version of checkPins method
+				if (this.pins < 0) {
+					this.pins = safetyPins;
+					this.roll3 = -1;
+					throw new InvalidRollException("You can't knock down more than 10 pins per frame");
+				}
+	
 			} else {
 				throw new InvalidRollException("You did not qualify for the bonus round");
 			}
@@ -48,6 +58,28 @@ public class LastFrame extends Frame {
 			}
 		}
 		return false;
+	}
+	
+	protected int getRoll3() {
+		return this.roll3;
+	}
+	
+	protected String getRoll3Display() {
+		String display = "";
+		if (this.roll3 >= 0) {
+			if (this.roll3 == 0) {  
+				display = "-";
+			} else if (this.pins == 0) {  
+				if (this.roll2 == 10) {  //You got a strike on rolls 1 and 2 or you got a spare on roll 2 followed by a strike
+					display = "X";
+				} else {  //You got a strike on roll 1 and not a strike on roll 2 but you knocked down all the remaining pins on roll 3
+					display = "/";
+				}
+			} else {  
+				display = this.roll3+"";
+			}
+		}
+		return display;
 	}
 	
 }

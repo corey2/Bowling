@@ -54,7 +54,13 @@ public class Game {
 	private void buildRollLine(Frame f) {
 		String roll1Display = f.getRoll1Display();
 		String roll2Display = f.getRoll2Display();
-		this.rollLine = this.rollLine+" "+roll1Display+" "+roll2Display + " |";
+		this.rollLine = this.rollLine+" "+roll1Display+" "+roll2Display+" |";
+		if (f.getClass() == LastFrame.class) {
+			LastFrame lf = (LastFrame) f;
+			String roll3Display = lf.getRoll3Display();
+			this.rollLine = this.rollLine+ " "+roll3Display+" |";
+		}
+			
 	}
 	
 	private void buildScoreLine(Frame f) {
@@ -108,9 +114,9 @@ public class Game {
 		int roll2 = f.getRoll2();
 		int bonus = roll1 + roll2;
 		int strikeScore = 30*(this.strikeCount-1);
-		System.out.println("strikeScore: "+strikeScore);
-		System.out.println("calculatedScore: "+this.calculatedScore);
-		System.out.println("totalScore: "+this.totalScore);
+		//System.out.println("strikeScore: "+strikeScore);
+		//System.out.println("calculatedScore: "+this.calculatedScore);
+		//System.out.println("totalScore: "+this.totalScore);
 		
 		
 		if (f.getPins() > 0) {
