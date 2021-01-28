@@ -162,7 +162,7 @@ public class Game {
 				String scoreString = String.valueOf(this.totalScore);
 				this.scoreLine = this.scoreLine.replace("?", scoreString);
 				this.strikeCount = 0;
-				this.spareCount = 1;
+				//this.spareCount = 1;
 			}
 		}
 		
@@ -184,7 +184,7 @@ public class Game {
 				String scoreString = String.valueOf(this.totalScore);
 				this.scoreLine = this.scoreLine.replace("?", scoreString);
 				this.spareCount = 0;
-				this.strikeCount = 1;
+				//this.strikeCount = 1;
 			} else {
 				//System.out.println("It was a spare");
 				this.totalScore = this.totalScore + roll1;
