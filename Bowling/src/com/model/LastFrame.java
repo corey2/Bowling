@@ -39,10 +39,16 @@ public class LastFrame extends Frame {
 					this.roll3 = -1;
 					throw new InvalidRollException("You can't knock down more than 10 pins per frame");
 				}
-	
+				
 			} else {
 				throw new InvalidRollException("You did not qualify for the bonus round");
 			}
+			//System.out.println("Roll1: "+this.roll1);
+			//System.out.println("Roll2: "+this.roll2);
+			//System.out.println("Roll3: "+this.roll3);
+			//System.out.println("Pins Left: "+this.pins);
+			
+			
 		} else {
 			throw new InvalidRollException("You already knocked down all the pins");
 		}
@@ -50,9 +56,11 @@ public class LastFrame extends Frame {
 	
 	//Checks whether the player qualifies for the bonus round
 	public boolean qualify() {
-		System.out.println("In qualify method");
-		if (this.roll1 == 10 || this.roll2 == 10) { //You got a strike on the first roll or a spare on the second roll
+		//System.out.println("In qualify method");
+		if (this.roll1 == 10 || this.roll1 + this.roll2 == 10) { //You got a strike on the first roll or a spare on the second roll
+			System.out.println("Check1");
 			if (this.roll3 < 0) {  //You haven't done your third roll yet
+				System.out.println("Check2");
 				return true;
 			}
 		}
