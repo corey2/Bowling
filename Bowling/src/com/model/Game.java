@@ -28,7 +28,10 @@ public class Game {
 	}
 	
 	public void addFrame(Frame frame) {
+		int rollBlah = frame.roll1;
+		System.out.println(rollBlah);
 		this.frames.add(frame);
+		
 	}
 	
 	public int getTotalScore() {
@@ -47,7 +50,7 @@ public class Game {
 	}
 	
 	private void buildFrameLine(Frame f) {
-		int frameNumber = f.getFrameNumber();
+		int frameNumber = f.frameNumber;
 		this.frameLine = this.frameLine+" "+frameNumber+" |";
 	}
 	

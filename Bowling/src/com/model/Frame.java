@@ -5,10 +5,10 @@ import com.exceptions.InvalidRollException;
 
 public class Frame {
 	
-	private int frameNumber;
-	private int roll1;
-	private int roll2;
-	private int pins;
+	int frameNumber;
+	int roll1;
+	int roll2;
+	int pins;
 	
 	
 	public Frame() {
@@ -51,6 +51,9 @@ public class Frame {
 		return this.pins;
 	}
 	
+	public int getFrameNumber() {
+		return this.frameNumber;
+	}
 	
 	public void print() {
 		printRow("Frame", Integer.toString(this.frameNumber));
@@ -68,13 +71,13 @@ public class Frame {
 		
 	}
 	
-	private void printRow(String title, String input) {
+	void printRow(String title, String input) {
 		System.out.print("| "+title+" |");
 		System.out.println(" "+input+" |");
 	}
 	
 	//If the number of pins falls below 0, this method will undo the roll and throw an exception.
-	private void checkPins(int roll, int safetyPins) throws InvalidRollException {
+	void checkPins(int roll, int safetyPins) throws InvalidRollException {
 		if (this.pins < 0) {
 			this.pins = safetyPins;
 			if (roll == 1) {
@@ -85,10 +88,6 @@ public class Frame {
 			}
 			throw new InvalidRollException("You can't knock down more than 10 pins per frame");
 		}
-	}
-	
-	int getFrameNumber() {
-		return this.frameNumber;
 	}
 	
 	int getRoll1() {
