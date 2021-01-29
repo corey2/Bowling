@@ -137,10 +137,10 @@ public class Game {
 		
 		if (f.getPins() > 0) {
 			//System.out.println("You got a strike in the last frame and in this frame you have "+f.getPins()+" pins left standing");
-			this.totalScore = this.totalScore + bonus;
+			totalScore = totalScore + bonus;
 			String scoreString = String.valueOf(this.totalScore);
-			this.scoreLine = this.scoreLine.replace("?", scoreString);
-			this.strikeCount = 0;
+			scoreLine = this.scoreLine.replace("?", scoreString);
+			strikeCount = 0;
 		} else {
 			//System.out.println("You knocked down all the pins more than once in a row after a strke!");
 			if (roll1 == 10) {
