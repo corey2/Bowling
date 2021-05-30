@@ -1,12 +1,13 @@
 import java.util.Scanner;
 
+import com.exceptions.InvalidFrameException;
 import com.exceptions.InvalidRollException;
 import com.model.Frame;
 import com.model.Game;
 import com.model.LastFrame;
 
 public class Bowling {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InvalidFrameException {
 		System.out.println("Welcome to Corey's bowling application!");
 		System.out.println("How to use: Every time you roll the ball, you must enter your score for that roll.");
 		System.out.println("Acceptable Input Values: 1, 2, 3, 4, 5, 6, 7, 8, 9, Miss, Strike, Spare");

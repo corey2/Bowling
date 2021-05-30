@@ -25,13 +25,22 @@ public class Frame {
 		this.pins = 10;
 	}
 	
+	
 	public void addRoll(int pinsHit) throws InvalidRollException {
+		if (pinsHit < 0) {
+			throw new InvalidRollException("You can't knock down a negative number of pins");
+		}
+		
 		if (pins > 0) {
 			int safetyPins = pins;
 			if (roll1 < 0) {
 				roll1 = pinsHit;
 				pins = pins - pinsHit;
 				checkPins(1, safetyPins);
+				if (pins == 0) {  //for strikes
+					roll2 = 0;
+				}
+				
 			} else if (roll2 < 0) {
 				roll2 = pinsHit;
 				pins = pins - pinsHit;
@@ -90,11 +99,11 @@ public class Frame {
 		}
 	}
 	
-	protected int getRoll1() {
+	public int getRoll1() {
 		return roll1;
 	}
 	
-	protected int getRoll2() {
+	public int getRoll2() {
 		return roll2;
 	}
 	
