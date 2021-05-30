@@ -8,6 +8,7 @@ public class Frame {
 	int roll1;
 	int roll2;
 	int pins;
+	int frameScore;
 	
 	
 	public Frame() {
@@ -15,6 +16,7 @@ public class Frame {
 		this.roll1 = -1;
 		this.roll2 = -1;
 		this.pins = 10;
+		this.frameScore = 0;
 		
 	}
 	

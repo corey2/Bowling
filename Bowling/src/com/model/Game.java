@@ -31,25 +31,37 @@ public class Game {
 		if (frame.roll1 < 0 || frame.roll2 < 0) {
 			throw new InvalidFrameException("You cannot add an incomplete frame to the game");
 		}
+		
+		
 		frames.add(frame);
 		int roll1 = frame.getRoll1();
 		int roll2 = frame.getRoll2();
+		
+		System.out.println("Score check 1: "+totalScore);
 		//Add the number of pins knocked down in each frame's roll to the total score
 		if (roll1 > 0) {
 			totalScore += frame.getRoll1();
 		}
 		
+		System.out.println("Score check 2: "+totalScore);
+		
 		if (spare) {
 			calculatePrevSpare(frame);
 		}
 			
+		System.out.println("Score check 3: "+totalScore);
+		
 		if (roll2 > 0) {
 			totalScore += frame.getRoll2();
 		}
 		
+		System.out.println("Score check 4: "+totalScore);
+		
 		if (strike) {
 			calculatePrevStrike(frame);
 		}
+		
+		System.out.println("Score check 5: "+totalScore);
 		
 		//Check if the frame has a strike or a spare
 		if (roll1 == 10) {
@@ -57,6 +69,36 @@ public class Game {
 		} else if (frame.getPins() == 0) {
 			spare = true;
 		}
+		
+		System.out.println("Score check 6: "+totalScore);
+		
+		if (frame.getClass() == LastFrame.class) {
+			LastFrame lastFrame = (LastFrame) frame;
+			int roll3 = lastFrame.getRoll3();
+			
+			System.out.println("111: "+roll1);
+			System.out.println("222: "+roll2);
+			System.out.println("333: "+roll3);
+			
+			if (roll3 > 0) {
+				totalScore = totalScore += lastFrame.getRoll3();
+			}
+			
+			System.out.println("Score check 7: "+totalScore);
+			
+			
+			if (roll1 == 10) {  //Strike on the first roll of the final frame
+				totalScore = totalScore + roll2 + roll3;
+			} else if (roll1 + roll2 == 10) {  //Spare after the first two rolls of the final frame
+				totalScore = totalScore + roll3;
+			}
+			
+			System.out.println("Score check 8: "+totalScore);
+			
+		}
+		
+		
+		System.out.println();
 		
 	}
 	

@@ -65,7 +65,7 @@ public class LastFrame extends Frame {
 		return false;
 	}
 	
-	protected int getRoll3() {
+	public int getRoll3() {
 		return roll3;
 	}
 	
