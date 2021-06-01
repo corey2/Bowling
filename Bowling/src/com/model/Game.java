@@ -12,6 +12,7 @@ public class Game {
 	private String scoreLine;
 	private boolean strike;
 	private boolean spare;
+	private boolean doubleStrike;
 	
 	
 	public Game() {
@@ -35,6 +36,10 @@ public class Game {
 			throw new InvalidFrameException("You cannot add an incomplete frame to the game");
 		}
 		
+		if (doubleStrike) {
+			calculateDoubleStrike(frame);
+			System.out.println("Doublestrike");
+		}
 		
 		if (spare) {
 			calculatePrevSpare(frame);
@@ -42,6 +47,7 @@ public class Game {
 		
 		if (strike) {
 			calculatePrevStrike(frame);
+			System.out.println("Strike");
 		}
 		
 		if (frame.getClass() == FinalFrame.class) {
@@ -64,30 +70,40 @@ public class Game {
 		frames.add(frame);
 	}
 	
-	private void calculateFinalFrame(FinalFrame finalFrame) {
-		if (finalFrame.roll3 == -1) {
-			finalFrame.frameScore = finalFrame.roll1+finalFrame.roll2;
-		} else {
-			finalFrame.frameScore = finalFrame.roll1+finalFrame.roll2+finalFrame.roll3;
-		}
-	}
-	
 	private void calculatePrevSpare(Frame frame) {
-		int spareBonus = frame.getRoll1();
 		Frame prevFrame = frames.get(frames.size()-1);
+		int spareBonus = frame.roll1;
 		prevFrame.frameScore = 10 + spareBonus;
 		spare = false;
 	}
 	
 	private void calculatePrevStrike(Frame frame) {
-		if (frame.getRoll1() < 10) {
-			int strikeBonus = frame.getRoll1() + frame.getRoll2();
-			Frame prevFrame = frames.get(frames.size()-1);
-			prevFrame.frameScore = 10 + strikeBonus;
+		Frame prevFrame = frames.get(frames.size()-1);
+		int strikeBonus = frame.roll1 + frame.roll2;
+		prevFrame.frameScore = 10 + strikeBonus;
+		strike = false;
+				
+		if (frame.roll1 == 10 && prevFrame.roll1 == 10) {
+			System.out.println("The bowler got 2 strikes in a row");
+			doubleStrike = true;
+		}
+	}
+	
+	private void calculateDoubleStrike(Frame frame) {
+		Frame twoFramesAgo = frames.get(frames.size()-2);
+		twoFramesAgo.frameScore = 20+frame.roll1;
+		if (frame.roll1 < 10) {
 			strike = false;
+			doubleStrike = false;
+		}
+	}
+	
+	
+	private void calculateFinalFrame(FinalFrame finalFrame) {
+		if (finalFrame.roll3 == -1) {
+			finalFrame.frameScore = finalFrame.roll1+finalFrame.roll2;
 		} else {
-			System.out.println("The bowler got 2 strikes in a row before the final frame");
-			System.exit(0);
+			finalFrame.frameScore = finalFrame.roll1+finalFrame.roll2+finalFrame.roll3;
 		}
 	}
 	
@@ -107,6 +123,9 @@ public class Game {
 	
 	public ArrayList<Integer> getScoreForEachFrame() {
 		ArrayList<Integer> scores = new ArrayList<Integer>();
+		for (Frame f: frames) {
+			scores.add(f.frameScore);
+		}
 		return scores;
 	}
 	
