@@ -25,6 +25,7 @@ public class Frame {
 		this.roll1 = -1;
 		this.roll2 = -1;
 		this.pins = 10;
+		this.frameScore = -1;
 	}
 	
 	
@@ -62,14 +63,6 @@ public class Frame {
 	
 	public int getFrameNumber() {
 		return frameNumber;
-	}
-	
-	protected void setFrameScore(int frameScore) {
-		this.frameScore = frameScore;
-	}
-	
-	public int getFrameScore() {
-		return frameScore;
 	}
 	
 	//If the number of pins falls below 0, this method will undo the roll and throw an exception.

@@ -4,7 +4,7 @@ import com.exceptions.InvalidRollException;
 
 public class FinalFrame extends Frame {
 	
-	protected int roll3;
+	int roll3;
 	
 	public FinalFrame() {
 		super(10);

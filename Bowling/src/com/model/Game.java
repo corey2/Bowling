@@ -35,14 +35,6 @@ public class Game {
 			throw new InvalidFrameException("You cannot add an incomplete frame to the game");
 		}
 		
-		if (frame.getPins() > 0) {
-			frame.setFrameScore(frame.getRoll1()+frame.getRoll2());
-		} else {
-			frame.setFrameScore(0);
-		}
-		
-		int roll1 = frame.getRoll1();
-		int roll2 = frame.getRoll2();
 		
 		if (spare) {
 			calculatePrevSpare(frame);
@@ -52,42 +44,38 @@ public class Game {
 			calculatePrevStrike(frame);
 		}
 		
-		//Check if the frame has a strike or a spare
-		if (roll1 == 10) {
-			strike = true;
-		} else if (frame.getPins() == 0) {
-			spare = true;
-		}
-		
-		
 		if (frame.getClass() == FinalFrame.class) {
-			FinalFrame finalFrame = (FinalFrame) frame;
-			finalFrame.setFrameScore(finalFrame.getRoll1()+finalFrame.getRoll2()+finalFrame.getRoll3());
-			if (finalFrame.getRoll3() == -1) {  //I don't want to subtract a point for the third roll that the player didn't qualify for
-				finalFrame.setFrameScore(finalFrame.getFrameScore()+1);
+			calculateFinalFrame((FinalFrame) frame);
+		} else {
+			if (frame.pins > 0) {
+				//calculate the score now
+				frame.frameScore = frame.roll1+frame.roll2;
+			} else {
+				frame.frameScore = 0;
+				//Check if the frame has a strike or a spare so we can calculate it's score in the next frame
+				if (frame.roll1 == 10) {
+					strike = true;
+				} else {
+					spare = true;
+				}
 			}
-			
-			
-			/*
-			if (roll3 > 0) {
-				totalScore = totalScore += finalFrame.getRoll3();
-			}
-			
-			if (roll1 == 10) {  //Strike on the first roll of the final frame
-				totalScore = totalScore + roll2 + roll3;
-			} else if (roll1 + roll2 == 10) {  //Spare after the first two rolls of the final frame
-				totalScore = totalScore + roll3;
-			}
-			*/
 		}
 		
 		frames.add(frame);
 	}
 	
+	private void calculateFinalFrame(FinalFrame finalFrame) {
+		if (finalFrame.roll3 == -1) {
+			finalFrame.frameScore = finalFrame.roll1+finalFrame.roll2;
+		} else {
+			finalFrame.frameScore = finalFrame.roll1+finalFrame.roll2+finalFrame.roll3;
+		}
+	}
+	
 	private void calculatePrevSpare(Frame frame) {
 		int spareBonus = frame.getRoll1();
 		Frame prevFrame = frames.get(frames.size()-1);
-		prevFrame.setFrameScore(10 + spareBonus);
+		prevFrame.frameScore = 10 + spareBonus;
 		spare = false;
 	}
 	
@@ -95,23 +83,31 @@ public class Game {
 		if (frame.getRoll1() < 10) {
 			int strikeBonus = frame.getRoll1() + frame.getRoll2();
 			Frame prevFrame = frames.get(frames.size()-1);
-			prevFrame.setFrameScore(10 + strikeBonus);
+			prevFrame.frameScore = 10 + strikeBonus;
 			strike = false;
+		} else {
+			System.out.println("The bowler got 2 strikes in a row before the final frame");
+			System.exit(0);
 		}
 	}
 	
 	
 	public int getTotalScore() {
 		int totalScore = 0;
-		int i = 1;
+		//int i = 1;
 		for (Frame f: frames) {
-			System.out.println("Frame "+i+": "+f.getFrameScore());
-			totalScore = totalScore + f.getFrameScore();
-			i++;
+			//System.out.println("Frame "+i+": "+f.frameScore);
+			totalScore = totalScore + f.frameScore;
+			//i++;
 		}
-		System.out.println("Total Score: "+totalScore);
-		System.out.println();
+		//System.out.println("Total Score: "+totalScore);
+		//System.out.println();
 		return totalScore;
+	}
+	
+	public ArrayList<Integer> getScoreForEachFrame() {
+		ArrayList<Integer> scores = new ArrayList<Integer>();
+		return scores;
 	}
 	
 	public void print() {

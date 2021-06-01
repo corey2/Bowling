@@ -52,7 +52,7 @@ public class ScoringTest {
 		
 		
 		//Test 2 -> https://www.bowl.com/Welcome/Welcome_Home/Keeping_Score/
-		
+		/*
 		frame1.addRoll(8);
 		frame1.addRoll(0);
 		
@@ -81,7 +81,41 @@ public class ScoringTest {
 		
 		frame10.addRoll(9);
 		frame10.addRoll(0);
+		*/		
 		
+		
+		//Test 3 -> https://milford.lib.de.us/2020/09/28/calculate-your-score-during-bowling/ (Ellen)
+		
+		frame1.addRoll(2);
+		frame1.addRoll(3);
+		
+		frame2.addRoll(7);
+		frame2.addRoll(3);
+		
+		frame3.addRoll(4);
+		frame3.addRoll(2);
+
+		frame4.addRoll(8);
+		frame4.addRoll(0);
+		
+		frame5.addRoll(8);
+		frame5.addRoll(1);
+		
+		frame6.addRoll(2);
+		frame6.addRoll(5);
+		
+		frame7.addRoll(1);
+		frame7.addRoll(8);
+		
+		frame8.addRoll(4);
+		frame8.addRoll(4);
+		
+		frame9.addRoll(4);
+		frame9.addRoll(0);
+		
+		frame10.addRoll(9);
+		frame10.addRoll(1);
+		frame10.addRoll(7);
 		
 		// Perfect Game
 		/*
@@ -109,36 +143,27 @@ public class ScoringTest {
 		*/
 		
 		
+		
 		game.addFrame(frame1);
-		game.getTotalScore();
-		//System.out.println("After Frame 1: "+game.getTotalScore());
+		System.out.println("After Frame 1: "+game.getTotalScore());
 		game.addFrame(frame2);
-		game.getTotalScore();
-		//System.out.println("After Frame 2: "+game.getTotalScore());
+		System.out.println("After Frame 2: "+game.getTotalScore());
 		game.addFrame(frame3);
-		game.getTotalScore();
-		//System.out.println("After Frame 3: "+game.getTotalScore());
+		System.out.println("After Frame 3: "+game.getTotalScore());
 		game.addFrame(frame4);
-		game.getTotalScore();
-		//System.out.println("After Frame 4: "+game.getTotalScore());
+		System.out.println("After Frame 4: "+game.getTotalScore());
 		game.addFrame(frame5);
-		game.getTotalScore();
-		//System.out.println("After Frame 5: "+game.getTotalScore());
+		System.out.println("After Frame 5: "+game.getTotalScore());
 		game.addFrame(frame6);
-		game.getTotalScore();
-		//System.out.println("After Frame 6: "+game.getTotalScore());
+		System.out.println("After Frame 6: "+game.getTotalScore());
 		game.addFrame(frame7);
-		game.getTotalScore();
-		//System.out.println("After Frame 7: "+game.getTotalScore());
+		System.out.println("After Frame 7: "+game.getTotalScore());
 		game.addFrame(frame8);
-		game.getTotalScore();
-		//System.out.println("After Frame 8: "+game.getTotalScore());
+		System.out.println("After Frame 8: "+game.getTotalScore());
 		game.addFrame(frame9);
-		game.getTotalScore();
-		//System.out.println("After Frame 9: "+game.getTotalScore());
+		System.out.println("After Frame 9: "+game.getTotalScore());
 		game.addFrame(frame10);
-		game.getTotalScore();
-		//System.out.println("After Frame 10: "+game.getTotalScore());
+		System.out.println("After Frame 10: "+game.getTotalScore());
 		
 		
 	}
