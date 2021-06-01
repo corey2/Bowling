@@ -1,53 +1,51 @@
 package com.model;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.exceptions.InvalidFrameException;
 
 public class Game {
 	
-	private ArrayList<Frame> frames;
+	private LinkedList<Frame> frames;
 	private String frameLine;
 	private String rollLine;
 	private String scoreLine;
-	private int totalScore;
-	private int calculatedScore;
 	private boolean strike;
 	private boolean spare;
 	
 	
 	public Game() {
-		this.frames = new ArrayList<Frame>();
+		this.frames = new LinkedList<Frame>();
 		this.frameLine = "| Frame |";
 		this.rollLine = "| Rolls |";
 		this.scoreLine = "| Score |";
-		this.totalScore = 0;
-		this.calculatedScore = 0;
 		this.strike = false;
 		this.spare = false;
 		
 	}
 	
 	public void addFrame(Frame frame) throws InvalidFrameException {
+		if (frames.size() > 0) {
+			if (frames.get(frames.size()-1).getClass() == FinalFrame.class) {
+				throw new InvalidFrameException("This game already has a final frame so you cannot add any more frames");
+			}
+		}
+			
 		if (frame.roll1 < 0 || frame.roll2 < 0) {
 			throw new InvalidFrameException("You cannot add an incomplete frame to the game");
 		}
 		
+		if (frame.getPins() > 0) {
+			frame.setFrameScore(frame.getRoll1()+frame.getRoll2());
+		} else {
+			frame.setFrameScore(0);
+		}
 		
-		frames.add(frame);
 		int roll1 = frame.getRoll1();
 		int roll2 = frame.getRoll2();
 		
-		//Add the number of pins knocked down in each frame's roll to the total score
-		if (roll1 > 0) {
-			totalScore += frame.getRoll1();
-		}
-		
 		if (spare) {
 			calculatePrevSpare(frame);
-		}
-		
-		if (roll2 > 0) {
-			totalScore += frame.getRoll2();
 		}
 		
 		if (strike) {
@@ -61,10 +59,16 @@ public class Game {
 			spare = true;
 		}
 		
+		
 		if (frame.getClass() == FinalFrame.class) {
 			FinalFrame finalFrame = (FinalFrame) frame;
-			int roll3 = finalFrame.getRoll3();
+			finalFrame.setFrameScore(finalFrame.getRoll1()+finalFrame.getRoll2()+finalFrame.getRoll3());
+			if (finalFrame.getRoll3() == -1) {  //I don't want to subtract a point for the third roll that the player didn't qualify for
+				finalFrame.setFrameScore(finalFrame.getFrameScore()+1);
+			}
 			
+			
+			/*
 			if (roll3 > 0) {
 				totalScore = totalScore += finalFrame.getRoll3();
 			}
@@ -74,25 +78,39 @@ public class Game {
 			} else if (roll1 + roll2 == 10) {  //Spare after the first two rolls of the final frame
 				totalScore = totalScore + roll3;
 			}
-			
+			*/
 		}
 		
+		frames.add(frame);
 	}
 	
 	private void calculatePrevSpare(Frame frame) {
 		int spareBonus = frame.getRoll1();
-		totalScore = totalScore += spareBonus;
+		Frame prevFrame = frames.get(frames.size()-1);
+		prevFrame.setFrameScore(10 + spareBonus);
 		spare = false;
 	}
 	
 	private void calculatePrevStrike(Frame frame) {
-		int strikeBonus = frame.getRoll1() + frame.getRoll2();
-		totalScore = totalScore += strikeBonus;
-		strike = false;
+		if (frame.getRoll1() < 10) {
+			int strikeBonus = frame.getRoll1() + frame.getRoll2();
+			Frame prevFrame = frames.get(frames.size()-1);
+			prevFrame.setFrameScore(10 + strikeBonus);
+			strike = false;
+		}
 	}
 	
 	
 	public int getTotalScore() {
+		int totalScore = 0;
+		int i = 1;
+		for (Frame f: frames) {
+			System.out.println("Frame "+i+": "+f.getFrameScore());
+			totalScore = totalScore + f.getFrameScore();
+			i++;
+		}
+		System.out.println("Total Score: "+totalScore);
+		System.out.println();
 		return totalScore;
 	}
 	
