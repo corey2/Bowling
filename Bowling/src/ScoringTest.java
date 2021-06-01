@@ -1,8 +1,8 @@
 import com.exceptions.InvalidFrameException;
 import com.exceptions.InvalidRollException;
+import com.model.FinalFrame;
 import com.model.Frame;
 import com.model.Game;
-import com.model.LastFrame;
 
 public class ScoringTest {
 
@@ -17,7 +17,7 @@ public class ScoringTest {
 		Frame frame7 = new Frame();
 		Frame frame8 = new Frame();
 		Frame frame9 = new Frame();
-		LastFrame frame10 = new LastFrame();
+		FinalFrame frame10 = new FinalFrame();
 		
 		
 		//Test 1

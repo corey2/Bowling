@@ -133,7 +133,7 @@ public class Frame {
 				display = "-";
 			} else if (pins == 0) {  //Spare
 				display = "/";
-			} else if (getClass() == LastFrame.class && pins == 10) {
+			} else if (getClass() == FinalFrame.class && pins == 10) {
 				display = "X";
 			} else {  //Second Roll 1-9
 				display = roll2+"";

@@ -2,11 +2,11 @@ package com.model;
 
 import com.exceptions.InvalidRollException;
 
-public class LastFrame extends Frame {
+public class FinalFrame extends Frame {
 	
 	protected int roll3;
 	
-	public LastFrame() {
+	public FinalFrame() {
 		super(10);
 		this.roll3 = -1;
 	}
