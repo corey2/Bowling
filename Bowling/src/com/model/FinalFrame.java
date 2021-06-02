@@ -2,16 +2,20 @@ package com.model;
 
 import com.exceptions.InvalidRollException;
 
-public class LastFrame extends Frame {
+public class FinalFrame extends Frame {
 	
-	protected int roll3;
+	int roll3;
 	
-	public LastFrame() {
+	public FinalFrame() {
 		super(10);
 		this.roll3 = -1;
 	}
 	
 	public void addRoll(int pinsHit) throws InvalidRollException {
+		if (pinsHit < 0) {
+			throw new InvalidRollException("You can't knock down a negative number of pins");
+		}
+		
 		if (pins > 0) {
 			int safetyPins = pins;
 			if (roll1 < 0) {
@@ -65,7 +69,7 @@ public class LastFrame extends Frame {
 		return false;
 	}
 	
-	protected int getRoll3() {
+	public int getRoll3() {
 		return roll3;
 	}
 	
