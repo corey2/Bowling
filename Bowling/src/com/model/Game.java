@@ -1,131 +1,41 @@
 package com.model;
 import java.util.ArrayList;
-import java.util.LinkedList;
-
-import com.exceptions.InvalidFrameException;
 
 public class Game {
 	
-	private LinkedList<Frame> frames;
+	private ArrayList<Frame> frames;
 	private String frameLine;
 	private String rollLine;
 	private String scoreLine;
-	private boolean strike;
-	private boolean spare;
-	private boolean doubleStrike;
+	private int totalScore;
+	private int calculatedScore;
+	private int strikeCount;
+	private int spareCount;
 	
 	
 	public Game() {
-		this.frames = new LinkedList<Frame>();
+		this.frames = new ArrayList<Frame>();
 		this.frameLine = "| Frame |";
 		this.rollLine = "| Rolls |";
 		this.scoreLine = "| Score |";
-		this.strike = false;
-		this.spare = false;
+		this.totalScore = 0;
+		this.calculatedScore = 0;
+		this.strikeCount = 0;
+		this.spareCount = 0;
 		
 	}
 	
-	public void addFrame(Frame frame) throws InvalidFrameException {
-		if (frames.size() > 0) {
-			if (frames.get(frames.size()-1).getClass() == FinalFrame.class) {
-				throw new InvalidFrameException("This game already has a final frame so you cannot add any more frames");
-			}
-		}
-			
-		if (frame.roll1 < 0 || frame.roll2 < 0) {
-			throw new InvalidFrameException("You cannot add an incomplete frame to the game");
-		}
-		
-		if (doubleStrike) {
-			calculateDoubleStrike(frame);
-			System.out.println("Doublestrike");
-		}
-		
-		if (spare) {
-			calculatePrevSpare(frame);
-			System.out.println("Spare");
-		}
-		
-		if (strike) {
-			calculatePrevStrike(frame);
-			System.out.println("Strike");
-		}
-		
-		if (frame.getClass() == FinalFrame.class) {
-			calculateFinalFrame((FinalFrame) frame);
-		} else {
-			if (frame.pins > 0) {
-				//calculate the score now
-				frame.frameScore = frame.roll1+frame.roll2;
-			} else {
-				frame.frameScore = 0;
-				//Check if the frame has a strike or a spare so we can calculate it's score in the next frame
-				if (frame.roll1 == 10) {
-					strike = true;
-				} else {
-					spare = true;
-				}
-			}
-		}
-		
+	public void addFrame(Frame frame) {
 		frames.add(frame);
+		int framesSize = frames.size();
+		Frame latestFrame = frames.get(framesSize-1);
+		buildFrameLine(latestFrame);
+		buildRollLine(latestFrame);
+		buildScoreLine(latestFrame);
 	}
-	
-	private void calculatePrevSpare(Frame frame) {
-		Frame prevFrame = frames.get(frames.size()-1);
-		int spareBonus = frame.roll1;
-		prevFrame.frameScore = 10 + spareBonus;
-		spare = false;
-	}
-	
-	private void calculatePrevStrike(Frame frame) {
-		Frame prevFrame = frames.get(frames.size()-1);
-		int strikeBonus = frame.roll1 + frame.roll2;
-		prevFrame.frameScore = 10 + strikeBonus;
-		strike = false;
-				
-		if (frame.roll1 == 10 && prevFrame.roll1 == 10) {
-			doubleStrike = true;
-		}
-	}
-	
-	private void calculateDoubleStrike(Frame frame) {
-		Frame twoFramesAgo = frames.get(frames.size()-2);
-		twoFramesAgo.frameScore = 20+frame.roll1;
-		if (frame.roll1 < 10) {
-			doubleStrike = false;
-		}
-	}
-	
-	
-	private void calculateFinalFrame(FinalFrame finalFrame) {
-		if (finalFrame.roll3 == -1) {
-			finalFrame.frameScore = finalFrame.roll1+finalFrame.roll2;
-		} else {
-			finalFrame.frameScore = finalFrame.roll1+finalFrame.roll2+finalFrame.roll3;
-		}
-	}
-	
 	
 	public int getTotalScore() {
-		int totalScore = 0;
-		//int i = 1;
-		for (Frame f: frames) {
-			//System.out.println("Frame "+i+": "+f.frameScore);
-			totalScore = totalScore + f.frameScore;
-			//i++;
-		}
-		//System.out.println("Total Score: "+totalScore);
-		//System.out.println();
 		return totalScore;
-	}
-	
-	public ArrayList<Integer> getScoreForEachFrame() {
-		ArrayList<Integer> scores = new ArrayList<Integer>();
-		for (Frame f: frames) {
-			scores.add(f.frameScore);
-		}
-		return scores;
 	}
 	
 	public void print() {
@@ -134,11 +44,6 @@ public class Game {
 		System.out.println(scoreLine);
 	}
 	
-	
-	
-	
-	
-	/*
 	private void buildFrameLine(Frame f) {
 		int frameNumber = f.frameNumber;
 		frameLine = frameLine+" "+frameNumber+" |";
@@ -289,6 +194,7 @@ public class Game {
 		}
 	}
 	
+	
 	private void calculateScore(boolean strike, boolean spare, int frameScore) {
 		//if (spare && strike) {
 		//	throw new InvalidRollException("You cannot get a spare and a strike in a single frame");
@@ -343,7 +249,7 @@ public class Game {
 		}
 		return score;
 	}
-	*/
+	
 	
 	
 }

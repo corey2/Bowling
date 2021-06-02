@@ -1,13 +1,12 @@
 import java.util.Scanner;
 
-import com.exceptions.InvalidFrameException;
 import com.exceptions.InvalidRollException;
-import com.model.FinalFrame;
 import com.model.Frame;
 import com.model.Game;
+import com.model.LastFrame;
 
 public class Bowling {
-	public static void main(String[] args) throws InvalidFrameException {
+	public static void main(String[] args) {
 		System.out.println("Welcome to Corey's bowling application!");
 		System.out.println("How to use: Every time you roll the ball, you must enter your score for that roll.");
 		System.out.println("Acceptable Input Values: 1, 2, 3, 4, 5, 6, 7, 8, 9, Miss, Strike, Spare");
@@ -31,34 +30,34 @@ public class Bowling {
 			f++;
 		}
 		System.out.println("Final Frame: "+f);
-		FinalFrame finalFrame = new FinalFrame();
+		LastFrame lastFrame = new LastFrame();
 		
 		while (r<=3) {
 			//System.out.println("R before: "+r);
 			if (r<3) {
-				r = doBusinessLogic(finalFrame, f, r, console);
+				r = doBusinessLogic(lastFrame, f, r, console);
 				//System.out.println("R after: "+r);
-			} else if (finalFrame.qualify()) {  //r==3
+			} else if (lastFrame.qualify()) {  //r==3
 				System.out.println("Enter the result of your bonus roll");
 				String result = console.nextLine();
 				if (result.matches("-?([1-9]\\d*)")) {
 					int pinsHit = Integer.parseInt(result);
 					if (pinsHit >= 1 && pinsHit <= 9) {
-						r = safeRoll(finalFrame, pinsHit, r);
+						r = safeRoll(lastFrame, pinsHit, r);
 					} else {
 						System.out.println("The number you entered is not between 1 and 9.");
 					}
 				} else if (result.equalsIgnoreCase("Miss")) {
 					System.out.println("Final Miss");
 					try {
-						finalFrame.addRoll(0);
+						lastFrame.addRoll(0);
 					} catch (InvalidRollException e) {
 						System.out.println(e.getMessage());
 					}
 				} else if (result.equalsIgnoreCase("Strike") || result.equalsIgnoreCase("Spare")) {
 					System.out.println("Final Strike or Spare");
 					try {
-						finalFrame.addRoll(10);
+						lastFrame.addRoll(10);
 					} catch (InvalidRollException e) {
 						System.out.println(e.getMessage());
 					}
@@ -73,7 +72,7 @@ public class Bowling {
 			}
 		}
 		
-		game.addFrame(finalFrame);
+		game.addFrame(lastFrame);
 		System.out.println();
 		System.out.println("Here is the final score:");
 		game.print();
