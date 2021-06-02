@@ -12,6 +12,10 @@ public class FinalFrame extends Frame {
 	}
 	
 	public void addRoll(int pinsHit) throws InvalidRollException {
+		if (pinsHit < 0) {
+			throw new InvalidRollException("You can't knock down a negative number of pins");
+		}
+		
 		if (pins > 0) {
 			int safetyPins = pins;
 			if (roll1 < 0) {

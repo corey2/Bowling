@@ -43,6 +43,7 @@ public class Game {
 		
 		if (spare) {
 			calculatePrevSpare(frame);
+			System.out.println("Spare");
 		}
 		
 		if (strike) {
@@ -84,7 +85,6 @@ public class Game {
 		strike = false;
 				
 		if (frame.roll1 == 10 && prevFrame.roll1 == 10) {
-			System.out.println("The bowler got 2 strikes in a row");
 			doubleStrike = true;
 		}
 	}
@@ -93,7 +93,6 @@ public class Game {
 		Frame twoFramesAgo = frames.get(frames.size()-2);
 		twoFramesAgo.frameScore = 20+frame.roll1;
 		if (frame.roll1 < 10) {
-			strike = false;
 			doubleStrike = false;
 		}
 	}

@@ -23,7 +23,7 @@ public class ScoringTest {
 		
 		
 		//Test 1
-		/*
+		
 		frame1.addRoll(10);
 	
 		frame2.addRoll(7);
@@ -50,7 +50,7 @@ public class ScoringTest {
 		frame10.addRoll(10);
 		frame10.addRoll(8);
 		frame10.addRoll(1);
-		*/
+		
 		
 		
 		//Test 2 -> https://www.bowl.com/Welcome/Welcome_Home/Keeping_Score/
@@ -83,11 +83,10 @@ public class ScoringTest {
 		
 		frame10.addRoll(9);
 		frame10.addRoll(0);
-		*/		
+		*/	
 		
 		
 		//Test 3 -> https://milford.lib.de.us/2020/09/28/calculate-your-score-during-bowling/ (Ellen)
-		
 		/*
 		frame1.addRoll(2);
 		frame1.addRoll(3);
@@ -122,7 +121,7 @@ public class ScoringTest {
 		*/
 		
 		// Perfect Game
-		
+		/*
 		frame1.addRoll(10);
 		
 		frame2.addRoll(10);
@@ -141,9 +140,10 @@ public class ScoringTest {
 		
 		frame9.addRoll(10);
 		
-		frame10.addRoll(9);
-		frame10.addRoll(1);
-		frame10.addRoll(1);
+		frame10.addRoll(10);
+		frame10.addRoll(10);
+		frame10.addRoll(10);
+		*/
 		
 		
 		

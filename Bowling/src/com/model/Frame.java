@@ -43,7 +43,6 @@ public class Frame {
 				if (pins == 0) {  //for strikes
 					roll2 = 0;
 				}
-				
 			} else if (roll2 < 0) {
 				roll2 = pinsHit;
 				pins = pins - pinsHit;
