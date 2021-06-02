@@ -8,7 +8,6 @@ public class Frame {
 	int roll1;
 	int roll2;
 	int pins;
-	int frameScore;
 	
 	
 	public Frame() {
@@ -16,7 +15,6 @@ public class Frame {
 		this.roll1 = -1;
 		this.roll2 = -1;
 		this.pins = 10;
-		this.frameScore = -1;
 		
 	}
 	
@@ -25,24 +23,15 @@ public class Frame {
 		this.roll1 = -1;
 		this.roll2 = -1;
 		this.pins = 10;
-		this.frameScore = -1;
 	}
 	
-	
 	public void addRoll(int pinsHit) throws InvalidRollException {
-		if (pinsHit < 0) {
-			throw new InvalidRollException("You can't knock down a negative number of pins");
-		}
-		
 		if (pins > 0) {
 			int safetyPins = pins;
 			if (roll1 < 0) {
 				roll1 = pinsHit;
 				pins = pins - pinsHit;
 				checkPins(1, safetyPins);
-				if (pins == 0) {  //for strikes
-					roll2 = 0;
-				}
 			} else if (roll2 < 0) {
 				roll2 = pinsHit;
 				pins = pins - pinsHit;
@@ -64,6 +53,29 @@ public class Frame {
 		return frameNumber;
 	}
 	
+	public void print() {
+		System.out.println("Frame Progress");
+		printRow("Frame", Integer.toString(frameNumber));
+		
+		String roll1Display = getRoll1Display();
+		String roll2Display = getRoll2Display();
+		String rolls = roll1Display + " " + roll2Display;
+		printRow("Rolls", rolls);
+		
+		String score = Integer.toString(10 - pins);
+		if (score.equals("10")) {
+			score = "?";
+		}
+		printRow("Score", score);
+		System.out.println("Pins remaining: "+getPins());
+		
+	}
+	
+	void printRow(String title, String input) {
+		System.out.print("| "+title+" |");
+		System.out.println(" "+input+" |");
+	}
+	
 	//If the number of pins falls below 0, this method will undo the roll and throw an exception.
 	void checkPins(int roll, int safetyPins) throws InvalidRollException {
 		if (pins < 0) {
@@ -78,11 +90,11 @@ public class Frame {
 		}
 	}
 	
-	public int getRoll1() {
+	protected int getRoll1() {
 		return roll1;
 	}
 	
-	public int getRoll2() {
+	protected int getRoll2() {
 		return roll2;
 	}
 	
@@ -110,35 +122,12 @@ public class Frame {
 				display = "-";
 			} else if (pins == 0) {  //Spare
 				display = "/";
-			} else if (getClass() == FinalFrame.class && pins == 10) {
+			} else if (getClass() == LastFrame.class && pins == 10) {
 				display = "X";
 			} else {  //Second Roll 1-9
 				display = roll2+"";
 			}
 		}
 		return display;
-	}
-	
-	public void print() {
-		System.out.println("Frame Progress");
-		printRow("Frame", Integer.toString(frameNumber));
-		
-		String roll1Display = getRoll1Display();
-		String roll2Display = getRoll2Display();
-		String rolls = roll1Display + " " + roll2Display;
-		printRow("Rolls", rolls);
-		
-		String score = Integer.toString(10 - pins);
-		if (score.equals("10")) {
-			score = "?";
-		}
-		printRow("Score", score);
-		System.out.println("Pins remaining: "+getPins());
-		
-	}
-	
-	void printRow(String title, String input) {
-		System.out.print("| "+title+" |");
-		System.out.println(" "+input+" |");
 	}
 }
