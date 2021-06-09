@@ -7,7 +7,7 @@ public class FinalFrame extends Frame {
 	int roll3;
 	
 	public FinalFrame() {
-		super(10);
+		super();
 		this.roll3 = -1;
 	}
 	

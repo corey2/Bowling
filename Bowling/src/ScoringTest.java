@@ -83,7 +83,7 @@ public class ScoringTest {
 		
 		frame10.addRoll(9);
 		frame10.addRoll(0);
-		*/	
+		*/
 		
 		
 		//Test 3 -> https://milford.lib.de.us/2020/09/28/calculate-your-score-during-bowling/ (Ellen)
@@ -146,10 +146,36 @@ public class ScoringTest {
 		*/
 		
 		
-		
-		
 		game.addFrame(frame1);
-		System.out.println("After Frame 1:");
+		game.print();
+		game.addFrame(frame2);
+		game.print();
+		game.addFrame(frame3);
+		game.print();
+		game.addFrame(frame4);
+		game.print();
+		game.addFrame(frame5);
+		game.print();
+		game.addFrame(frame6);
+		game.print();
+		game.addFrame(frame7);
+		game.print();
+		game.addFrame(frame8);
+		game.print();
+		game.addFrame(frame9);
+		game.print();
+		game.addFrame(frame10);
+		game.print();
+		
+		
+
+			
+	}
+
+	
+	public static void addFrameToGame(Game game, Frame frame, int n) throws InvalidFrameException {
+		game.addFrame(frame);
+		System.out.println("After Frame "+n+":");
 		ArrayList<Integer> scores = game.getScoreForEachFrame();
 		System.out.print("Frame Scores: ");
 		for (int score: scores) {
@@ -159,106 +185,7 @@ public class ScoringTest {
 		System.out.println("Total Score: "+game.getTotalScore());
 		System.out.println();
 		
-		game.addFrame(frame2);
-		System.out.println("After Frame 2:");
-		scores = game.getScoreForEachFrame();
-		System.out.print("Frame Scores: ");
-		for (int score: scores) {
-			System.out.print(score+", ");
-		}
+		game.print();
 		System.out.println();
-		System.out.println("Total Score: "+game.getTotalScore());
-		System.out.println();
-		
-		game.addFrame(frame3);
-		System.out.println("After Frame 3:");
-		scores = game.getScoreForEachFrame();
-		System.out.print("Frame Scores: ");
-		for (int score: scores) {
-			System.out.print(score+", ");
-		}
-		System.out.println();
-		System.out.println("Total Score: "+game.getTotalScore());
-		System.out.println();
-		
-		game.addFrame(frame4);
-		System.out.println("After Frame 4:");
-		scores = game.getScoreForEachFrame();
-		System.out.print("Frame Scores: ");
-		for (int score: scores) {
-			System.out.print(score+", ");
-		}
-		System.out.println();
-		System.out.println("Total Score: "+game.getTotalScore());
-		System.out.println();
-		
-		game.addFrame(frame5);
-		System.out.println("After Frame 5:");
-		scores = game.getScoreForEachFrame();
-		System.out.print("Frame Scores: ");
-		for (int score: scores) {
-			System.out.print(score+", ");
-		}
-		System.out.println();
-		System.out.println("Total Score: "+game.getTotalScore());
-		System.out.println();
-		
-		game.addFrame(frame6);
-		System.out.println("After Frame 6:");
-		scores = game.getScoreForEachFrame();
-		System.out.print("Frame Scores: ");
-		for (int score: scores) {
-			System.out.print(score+", ");
-		}
-		System.out.println();
-		System.out.println("Total Score: "+game.getTotalScore());
-		System.out.println();
-		
-		game.addFrame(frame7);
-		System.out.println("After Frame 7:");
-		scores = game.getScoreForEachFrame();
-		System.out.print("Frame Scores: ");
-		for (int score: scores) {
-			System.out.print(score+", ");
-		}
-		System.out.println();
-		System.out.println("Total Score: "+game.getTotalScore());
-		System.out.println();
-		
-		game.addFrame(frame8);
-		System.out.println("After Frame 8:");
-		scores = game.getScoreForEachFrame();
-		System.out.print("Frame Scores: ");
-		for (int score: scores) {
-			System.out.print(score+", ");
-		}
-		System.out.println();
-		System.out.println("Total Score: "+game.getTotalScore());
-		System.out.println();
-		
-		game.addFrame(frame9);
-		System.out.println("After Frame 9:");
-		scores = game.getScoreForEachFrame();
-		System.out.print("Frame Scores: ");
-		for (int score: scores) {
-			System.out.print(score+", ");
-		}
-		System.out.println();
-		System.out.println("Total Score: "+game.getTotalScore());
-		System.out.println();
-		
-		game.addFrame(frame10);
-		System.out.println("After Frame 10:");
-		scores = game.getScoreForEachFrame();
-		System.out.print("Frame Scores: ");
-		for (int score: scores) {
-			System.out.print(score+", ");
-		}
-		System.out.println();
-		System.out.println("Total Score: "+game.getTotalScore());
-		System.out.println();
-		
-		
 	}
-
 }

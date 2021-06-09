@@ -4,30 +4,17 @@ import com.exceptions.InvalidRollException;
 
 public class Frame {
 	
-	int frameNumber;
 	int roll1;
 	int roll2;
 	int pins;
 	int frameScore;
 	
-	
 	public Frame() {
-		this.frameNumber = 1;
 		this.roll1 = -1;
 		this.roll2 = -1;
 		this.pins = 10;
 		this.frameScore = -1;
-		
-	}
-	
-	public Frame(int frameNumber) {
-		this.frameNumber = frameNumber;
-		this.roll1 = -1;
-		this.roll2 = -1;
-		this.pins = 10;
-		this.frameScore = -1;
-	}
-	
+	}	
 	
 	public void addRoll(int pinsHit) throws InvalidRollException {
 		if (pinsHit < 0) {
@@ -60,9 +47,6 @@ public class Frame {
 		return pins;
 	}
 	
-	public int getFrameNumber() {
-		return frameNumber;
-	}
 	
 	//If the number of pins falls below 0, this method will undo the roll and throw an exception.
 	void checkPins(int roll, int safetyPins) throws InvalidRollException {
@@ -119,6 +103,7 @@ public class Frame {
 		return display;
 	}
 	
+	/*
 	public void print() {
 		System.out.println("Frame Progress");
 		printRow("Frame", Integer.toString(frameNumber));
@@ -141,4 +126,5 @@ public class Frame {
 		System.out.print("| "+title+" |");
 		System.out.println(" "+input+" |");
 	}
+	*/
 }

@@ -18,7 +18,7 @@ public class Bowling {
 		int r = 1;
 		while (f<=9) {
 			System.out.println("Starting Frame "+f);
-			Frame frame = new Frame(f);
+			Frame frame = new Frame();
 			while (r<=2) {
 				r = doBusinessLogic(frame, f, r, console);
 			}	
@@ -123,7 +123,7 @@ public class Bowling {
 	public static int safeRoll(Frame frame, int pinsHit, int r) {
 		try {
 			frame.addRoll(pinsHit);
-			frame.print();
+			//frame.print();
 			r++;
 		} catch (InvalidRollException e) {
 			System.out.println(e.getMessage());
