@@ -27,9 +27,9 @@ public class Frame {
 				roll1 = pinsHit;
 				pins = pins - pinsHit;
 				checkPins(1, safetyPins);
-				if (pins == 0) {  //for strikes
-					roll2 = 0;
-				}
+				//if (pins == 0) {  //for strikes
+				//	roll2 = 0;
+				//}
 			} else if (roll2 < 0) {
 				roll2 = pinsHit;
 				pins = pins - pinsHit;
@@ -71,6 +71,7 @@ public class Frame {
 	}
 	
 	protected String getRoll1Display() {
+		//System.out.println("Roll1: "+roll1);
 		String display = "";
 		if (roll1 >= 0) {
 			if (roll1 == 0) {  //First roll miss
@@ -85,6 +86,7 @@ public class Frame {
 	}
 	
 	protected String getRoll2Display() {
+		//System.out.println("Roll2: "+roll2);
 		String display = "";
 		if (roll2 >= 0) {
 			//System.out.println("Print Check:");

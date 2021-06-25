@@ -27,7 +27,7 @@ public class Bowling {
 			//if (f % 2 == 0)
 			System.out.println();
 			System.out.println("Here are the results after Frame "+f);
-			game.print();
+			System.out.println(game.getDisplay());
 			f++;
 		}
 		System.out.println("Final Frame: "+f);
@@ -76,7 +76,7 @@ public class Bowling {
 		game.addFrame(finalFrame);
 		System.out.println();
 		System.out.println("Here is the final score:");
-		game.print();
+		System.out.println(game.getDisplay());
 		console.close();
 	}
 	

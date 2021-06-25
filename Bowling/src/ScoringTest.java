@@ -24,32 +24,70 @@ public class ScoringTest {
 		
 		//Test 1
 		
+		System.out.println(game.getDisplay());
 		frame1.addRoll(10);
-	
+		System.out.println(game.getDisplayWithRoll(10));
+		game.addFrame(frame1);
+		System.out.println(game.getDisplay());
+		
 		frame2.addRoll(7);
+		System.out.println(game.getDisplayWithRoll(7));
 		frame2.addRoll(3);
+		System.out.println(game.getDisplayWithRoll(3));
+		game.addFrame(frame2);
+		System.out.println(game.getDisplay());
 		
 		frame3.addRoll(9);
+		System.out.println(game.getDisplayWithRoll(9));
 		frame3.addRoll(0);
+		System.out.println(game.getDisplayWithRoll(0));
+		game.addFrame(frame3);
+		System.out.println(game.getDisplay());
 		
 		frame4.addRoll(10);
+		//game.getDisplayWithRoll(10);
+		game.addFrame(frame4);
+		System.out.println(game.getDisplay());
 		
 		frame5.addRoll(0);
+		//game.getDisplayWithRoll(0);
 		frame5.addRoll(8);
+		//game.getDisplayWithRoll(8);
+		game.addFrame(frame5);
+		System.out.println(game.getDisplay());
 		
 		frame6.addRoll(8);
+		//game.getDisplayWithRoll(8);
 		frame6.addRoll(2);
+		//game.getDisplayWithRoll(2);
+		game.addFrame(frame6);
+		System.out.println(game.getDisplay());
 		
 		frame7.addRoll(0);
+		//game.getDisplayWithRoll(0);
 		frame7.addRoll(6);
+		//game.getDisplayWithRoll(6);
+		game.addFrame(frame7);
+		System.out.println(game.getDisplay());
 
 		frame8.addRoll(10);
+		//game.getDisplayWithRoll(10);
+		game.addFrame(frame8);
+		System.out.println(game.getDisplay());
 		
 		frame9.addRoll(10);
+		//game.getDisplayWithRoll(10);
+		game.addFrame(frame9);
+		System.out.println(game.getDisplay());
 		
 		frame10.addRoll(10);
+		//game.getDisplayWithRoll(10);
 		frame10.addRoll(8);
+		//game.getDisplayWithRoll(8);
 		frame10.addRoll(1);
+		//game.getDisplayWithRoll(1);
+		game.addFrame(frame10);
+		System.out.println(game.getDisplay());
 		
 		
 		
@@ -146,46 +184,27 @@ public class ScoringTest {
 		*/
 		
 		
-		game.addFrame(frame1);
-		game.print();
+		/*
+		System.out.println(game.getDisplay());
 		game.addFrame(frame2);
-		game.print();
+		System.out.println(game.getDisplay());
 		game.addFrame(frame3);
-		game.print();
+		System.out.println(game.getDisplay());
 		game.addFrame(frame4);
-		game.print();
+		System.out.println(game.getDisplay());
 		game.addFrame(frame5);
-		game.print();
+		System.out.println(game.getDisplay());
 		game.addFrame(frame6);
-		game.print();
+		System.out.println(game.getDisplay());
 		game.addFrame(frame7);
-		game.print();
+		System.out.println(game.getDisplay());
 		game.addFrame(frame8);
-		game.print();
+		System.out.println(game.getDisplay());
 		game.addFrame(frame9);
-		game.print();
+		System.out.println(game.getDisplay());
 		game.addFrame(frame10);
-		game.print();
-		
-		
-
-			
+		System.out.println(game.getDisplay());
+		*/
 	}
 
-	
-	public static void addFrameToGame(Game game, Frame frame, int n) throws InvalidFrameException {
-		game.addFrame(frame);
-		System.out.println("After Frame "+n+":");
-		ArrayList<Integer> scores = game.getScoreForEachFrame();
-		System.out.print("Frame Scores: ");
-		for (int score: scores) {
-			System.out.print(score+", ");
-		}
-		System.out.println();
-		System.out.println("Total Score: "+game.getTotalScore());
-		System.out.println();
-		
-		game.print();
-		System.out.println();
-	}
 }

@@ -32,9 +32,11 @@ public class Game {
 			}
 		}
 		
+		/*
 		if (frame.roll1 < 0 || frame.roll2 < 0) {
 			throw new InvalidFrameException("You cannot add an incomplete frame to the game");
 		}
+		*/
 		
 		if (doubleStrike) {
 			calculateDoubleStrike(frame);
@@ -142,6 +144,10 @@ public class Game {
 		String roll1Display = f.getRoll1Display();
 		String roll2Display = f.getRoll2Display();
 		
+		//System.out.println("Display 1: "+roll1Display);
+		//System.out.println("Display 2: "+roll2Display);
+		//System.out.println();
+		
 		if (f.getClass() == Frame.class) { 
 			rollLine = rollLine+" "+roll1Display+" "+roll2Display+" |";
 		}
@@ -167,11 +173,21 @@ public class Game {
 	
 	private void buildScoreLine(Frame f) {
 		ArrayList<Integer> scores = getScoreForEachFrame();
+		
+		/*
+		System.out.println("Current Frame: "+currentFrame);
+		System.out.println("Scores: ");
+		for (int score:scores) {
+			System.out.println(score);
+		}
+		System.out.println();
+		*/
+		
 		scoreLine = "| Score |";
 		int totalScore = 0;
 		for (int i=0; i<scores.size(); i++) {
 			totalScore = totalScore + scores.get(i);
-			if (f.getPins() == 0 && i == scores.size()-1) {  //The player got a strike or spare on the current frame so their total score can't be calculated until some point in time after the next frame starts
+			if (totalScore<0 || f.getPins() == 0 && i == scores.size()-1) {  //The frame is incomplete or the player got a strike or spare on the current frame so their total score can't be calculated until some point in time after the next frame starts
 				scoreLine = scoreLine+" ? |";
 			} else {
 				scoreLine = scoreLine+" "+totalScore+" |";
@@ -180,29 +196,40 @@ public class Game {
 	}
 	
 	
-	public void print() {
-		System.out.println(frameLine);
-		System.out.println(rollLine);
-		System.out.println(scoreLine);
-		System.out.println();
+	public String getDisplay() {
+		//System.out.println("Display");
+		String display = frameLine+"\n"+rollLine+"\n"+scoreLine+"\n";
+		return display;
+	}
+		
+	
+	public String getDisplayWithRoll(int pinsHit) throws InvalidRollException {
+		//System.out.println("Display With Roll");
+		String tempRollLine = rollLine+" "+pinsHit;
+		String display = frameLine+"\n"+tempRollLine+"\n"+scoreLine+"\n";
+		return display;
+		
+		//System.out.println("Roll Line: "+rollLine);
+		//System.out.println();
+		//Frame f = frames.get(frames.size()-1);
+		//f.addRoll(pinsHit);
+		
+		//buildRollLine(f);
+		//rollLine = trimLine(rollLine);
+		
+		
+		//scoreLine = trimLine(scoreLine);
+		//buildScoreLine(f);
+		
 	}
 	
-	private int convertDisplayToInt(String display) {
-		int score;
-		if (display.matches("-?([1-9]\\d*)")) {
-			score = Integer.parseInt(display);
-		} else if (display.equals("X") || display.equals("/")) {
-			score = 10;
-		} else if (display.equals("-")) {
-			score = 0;
-		} else { //Something went wrong
-			score = -1;
+	public String trimLine(String line) {
+		line = line.substring(0, line.length()-1);
+		while (line.charAt(line.length()-1) != '|') {
+			line = line.substring(0, line.length()-1);
 		}
-		return score;
+		return line;
 	}
-	
-	
-	
 	
 	
 	/*
