@@ -72,8 +72,8 @@ public class Game {
 		
 		frames.add(frame);
 		buildFrameLine();
-		buildRollLine(frame);
-		buildScoreLine(frame);
+		buildRollLine();
+		buildScoreLine();
 		
 		currentFrame++;
 	}
@@ -86,9 +86,15 @@ public class Game {
 	}
 	
 	private void calculatePrevStrike(Frame frame) {
+		//System.out.println("Calculating previous strike");
 		Frame prevFrame = frames.get(frames.size()-1);
-		int strikeBonus = frame.roll1 + frame.roll2;
-		prevFrame.frameScore = 10 + strikeBonus;
+		//System.out.println("Roll 1: "+frame.roll1);
+		//System.out.println("Roll 2: "+frame.roll2);
+		//System.out.println();
+		if (frame.roll2 >= 0) {
+			int strikeBonus = frame.roll1 + frame.roll2;
+			prevFrame.frameScore = 10 + strikeBonus;
+		} 
 		strike = false;
 				
 		if (frame.roll1 == 10 && prevFrame.roll1 == 10) {
@@ -118,7 +124,6 @@ public class Game {
 		int totalScore = 0;
 		//int i = 1;
 		for (Frame f: frames) {
-			//System.out.println("Frame "+i+": "+f.frameScore);
 			totalScore = totalScore + f.frameScore;
 			//i++;
 		}
@@ -130,6 +135,7 @@ public class Game {
 	public ArrayList<Integer> getScoreForEachFrame() {
 		ArrayList<Integer> scores = new ArrayList<Integer>();
 		for (Frame f: frames) {
+			//System.out.println("Frame Score: "+f.frameScore);
 			scores.add(f.frameScore);
 		}
 		return scores;
@@ -140,16 +146,17 @@ public class Game {
 		frameLine = frameLine+" "+currentFrame+" |";
 	}
 	
-	private void buildRollLine(Frame f) {
+	private void buildRollLine() {
+		Frame f = frames.get(frames.size()-1);
 		String roll1Display = f.getRoll1Display();
 		String roll2Display = f.getRoll2Display();
 		
-		//System.out.println("Display 1: "+roll1Display);
-		//System.out.println("Display 2: "+roll2Display);
-		//System.out.println();
-		
 		if (f.getClass() == Frame.class) { 
-			rollLine = rollLine+" "+roll1Display+" "+roll2Display+" |";
+			if (roll1Display.equals("X")) {  //Doesn't add a space for the second roll if the first roll is a strike
+				rollLine = rollLine+" "+roll1Display+" |";
+			} else {
+				rollLine = rollLine+" "+roll1Display+" "+roll2Display+" |";
+			}
 		}
 		
 		if (f.getClass() == FinalFrame.class) {
@@ -171,10 +178,9 @@ public class Game {
 			
 	}
 	
-	private void buildScoreLine(Frame f) {
-		ArrayList<Integer> scores = getScoreForEachFrame();
-		
+	private void buildScoreLine() {
 		/*
+		ArrayList<Integer> scores = getScoreForEachFrame();
 		System.out.println("Current Frame: "+currentFrame);
 		System.out.println("Scores: ");
 		for (int score:scores) {
@@ -185,9 +191,12 @@ public class Game {
 		
 		scoreLine = "| Score |";
 		int totalScore = 0;
-		for (int i=0; i<scores.size(); i++) {
-			totalScore = totalScore + scores.get(i);
-			if (totalScore<0 || f.getPins() == 0 && i == scores.size()-1) {  //The frame is incomplete or the player got a strike or spare on the current frame so their total score can't be calculated until some point in time after the next frame starts
+		System.out.println("Building Score Line");
+		for (int i=0; i<frames.size(); i++) {
+			Frame f = frames.get(i);
+			int score = f.frameScore;
+			totalScore = totalScore + score;
+			if (f.pins == 0 && score == 0) {  //The player got a strike or spare and the score for the frame hasn't been calculated yet
 				scoreLine = scoreLine+" ? |";
 			} else {
 				scoreLine = scoreLine+" "+totalScore+" |";
@@ -205,7 +214,12 @@ public class Game {
 	
 	public String getDisplayWithRoll(int pinsHit) throws InvalidRollException {
 		//System.out.println("Display With Roll");
-		String tempRollLine = rollLine+" "+pinsHit;
+		String tempRollLine = "";
+		if (pinsHit > 0) {
+			tempRollLine = rollLine+" "+pinsHit;
+		} else {
+			tempRollLine = rollLine+" -";
+		}
 		String display = frameLine+"\n"+tempRollLine+"\n"+scoreLine+"\n";
 		return display;
 		
@@ -217,12 +231,14 @@ public class Game {
 		//buildRollLine(f);
 		//rollLine = trimLine(rollLine);
 		
-		
 		//scoreLine = trimLine(scoreLine);
 		//buildScoreLine(f);
 		
 	}
 	
+	
+	
+	/*
 	public String trimLine(String line) {
 		line = line.substring(0, line.length()-1);
 		while (line.charAt(line.length()-1) != '|') {
@@ -232,7 +248,7 @@ public class Game {
 	}
 	
 	
-	/*
+
 	public Game(boolean prefilled) {
 		frames = new LinkedList<Frame>();
 		for (int i=1; i<=9; i++) {
