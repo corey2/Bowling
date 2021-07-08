@@ -91,7 +91,7 @@ public class ScoringTest {
 		
 		
 		
-		//Test 2 -> https://www.bowl.com/Welcome/Welcome_Home/Keeping_Score/
+		//Test 2 -> 
 		/*
 		frame1.addRoll(8);
 		frame1.addRoll(0);
