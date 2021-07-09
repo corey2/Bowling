@@ -18,7 +18,7 @@ public class Frame {
 	
 	public void addRoll(int pinsHit) throws InvalidRollException {
 		if (pinsHit < 0) {
-			throw new InvalidRollException("You can't knock down a negative number of pins");
+			throw new InvalidRollException("InvalidRollException: You can't knock down a negative number of pins");
 		}
 		
 		if (pins > 0) {
@@ -35,11 +35,11 @@ public class Frame {
 				pins = pins - pinsHit;
 				checkPins(2, safetyPins);
 			} else {
-				throw new InvalidRollException("You can't roll the ball more than twice per frame");
+				throw new InvalidRollException("InvalidRollException: You can't roll the ball more than twice per frame");
 			}
 			
 		} else {
-			throw new InvalidRollException("You already knocked down all the pins");
+			throw new InvalidRollException("InvalidRollException: You already knocked down all the pins");
 		}
 	}
 	
@@ -58,7 +58,7 @@ public class Frame {
 			if (roll == 2) {
 				roll2 = -1;
 			}
-			throw new InvalidRollException("You can't knock down more than 10 pins per frame");
+			throw new InvalidRollException("InvalidRollException: You can't knock down more than 10 pins per frame");
 		}
 	}
 	
@@ -89,9 +89,10 @@ public class Frame {
 		//System.out.println("Roll2: "+roll2);
 		String display = "";
 		if (roll2 >= 0) {
-			//System.out.println("Print Check:");
-			//System.out.println(this.roll2);
-			//System.out.println(this.pins);
+			System.out.println("Print Check:");
+			System.out.println(this.roll2);
+			System.out.println(this.pins);
+			System.out.println();
 			if (roll2 == 0) {  //Second roll miss
 				display = "-";
 			} else if (pins == 0) {  //Spare

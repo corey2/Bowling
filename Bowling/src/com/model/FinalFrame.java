@@ -13,7 +13,7 @@ public class FinalFrame extends Frame {
 	
 	public void addRoll(int pinsHit) throws InvalidRollException {
 		if (pinsHit < 0) {
-			throw new InvalidRollException("You can't knock down a negative number of pins");
+			throw new InvalidRollException("InvalidRollException: You can't knock down a negative number of pins");
 		}
 		
 		if (pins > 0) {
@@ -41,11 +41,11 @@ public class FinalFrame extends Frame {
 				if (pins < 0) {
 					pins = safetyPins;
 					roll3 = -1;
-					throw new InvalidRollException("You can't knock down more than 10 pins per frame");
+					throw new InvalidRollException("InvalidRollException: You can't knock down more than 10 pins per frame");
 				}
 				
 			} else {
-				throw new InvalidRollException("You did not qualify for the bonus round");
+				throw new InvalidRollException("InvalidRollException: You did not qualify for the bonus round");
 			}
 			//System.out.println("Roll1: "+roll1);
 			//System.out.println("Roll2: "+roll2);
@@ -54,7 +54,7 @@ public class FinalFrame extends Frame {
 			
 			
 		} else {
-			throw new InvalidRollException("You already knocked down all the pins");
+			throw new InvalidRollException("InvalidRollException: You already knocked down all the pins");
 		}
 	}
 	

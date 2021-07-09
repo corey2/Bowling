@@ -191,7 +191,6 @@ public class Game {
 		
 		scoreLine = "| Score |";
 		int totalScore = 0;
-		System.out.println("Building Score Line");
 		for (int i=0; i<frames.size(); i++) {
 			Frame f = frames.get(i);
 			int score = f.frameScore;
@@ -234,6 +233,22 @@ public class Game {
 		//scoreLine = trimLine(scoreLine);
 		//buildScoreLine(f);
 		
+	}
+	
+	public String getDisplayWith2Rolls(int pinsHit1, int pinsHit2) throws InvalidRollException {
+		//System.out.println("Display With Roll");
+		String tempRollLine = "";
+		if (pinsHit1 > 0 && pinsHit2 > 0) {
+			tempRollLine = rollLine+" "+pinsHit1+" "+pinsHit2;
+		} else if (pinsHit1 > 0) {
+			tempRollLine = rollLine+" "+pinsHit1+" -";
+		} else if (pinsHit2 > 0) {
+			tempRollLine = rollLine+" - "+pinsHit2;
+		} else {
+			tempRollLine = rollLine+" - -";
+		}
+		String display = frameLine+"\n"+tempRollLine+"\n"+scoreLine+"\n";
+		return display;
 	}
 	
 	

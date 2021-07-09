@@ -20,22 +20,18 @@ public class Bowling2 {
 			System.out.println("Starting Frame "+f);
 			Frame frame = new Frame();
 			while (r<=2 && frame.getPins()>0) {
-				System.out.println("Enter the result of roll "+r);
-				String rollInput = console.nextLine();
-				int pinsHit = convertRollInput(rollInput, frame);
-				if (pinsHit>=0) {
-					try {
-						frame.addRoll(pinsHit);
-						//System.out.println("Pins hit: "+pinsHit);
-						//System.out.println("Pins remaining: "+frame.getPins());
-						if (r==1 && frame.getPins()>0) {
-							System.out.println("Current Score:");
-							System.out.println(game.getDisplayWithRoll(pinsHit));
-						}
-						r++;
-					} catch (InvalidRollException e) {
-						System.out.println(e.getMessage());
+				int pinsHit = convertRollInput(console, frame, r);
+				try {
+					frame.addRoll(pinsHit);
+					//System.out.println("Pins hit: "+pinsHit);
+					//System.out.println("Pins remaining: "+frame.getPins());
+					if (r==1) {
+						System.out.println("Current Score:");
+						System.out.println(game.getDisplayWithRoll(pinsHit));
 					}
+					r++;
+				} catch (InvalidRollException e) {
+					System.out.println(e.getMessage());
 				}
 			}	
 			game.addFrame(frame);
@@ -46,89 +42,102 @@ public class Bowling2 {
 			f++;
 		}
 		
-		/*
+		
 		System.out.println("Starting Frame 10");
 		FinalFrame finalFrame = new FinalFrame();
 		
-		boolean flag = false;
-		int pinsHit = -1;
-		while (!flag) {
-			System.out.println("Enter the result of roll 1");
-			String result = console.nextLine();
-			if (result.matches("-?([0-9]\\d*)")) {
-				pinsHit = Integer.parseInt(result);
-				flag = true;
-			} else if (result.equalsIgnoreCase("Miss")) {
-				pinsHit = 0;
-				flag = true;
-			} else if (result.equalsIgnoreCase("Strike")) {
-				pinsHit = 10;
-				flag = true;
-			} else if (result.equalsIgnoreCase("Spare")) {
-				System.out.println("Your first roll cannot be a spare");
+		while (r<=3) {
+			if (r<=2) {
+				int pinsHit = convertRollInput(console, finalFrame, r);
+				try {
+					finalFrame.addRoll(pinsHit);
+					if (r==1) {
+						System.out.println("Current Score:");
+						System.out.println(game.getDisplayWithRoll(pinsHit));
+					}
+					r++;
+				} catch (InvalidRollException e) {
+					System.out.println(e.getMessage());
+				}
 			} else {
-				System.out.println("You did not enter a valid input");
+				if (finalFrame.qualify()) {
+					try {
+						System.out.println("Current Score:");
+						System.out.println(game.getDisplayWith2Rolls(finalFrame.getRoll1(), finalFrame.getRoll2()));
+					} catch (InvalidRollException e) {
+						System.out.println(e.getMessage());
+					}
+					System.out.println("You qualify for a bonus roll!");
+					int pinsHit = convertRollInput(console, finalFrame, r);
+					try {
+						finalFrame.addRoll(pinsHit);
+						r++;
+					} catch (InvalidRollException e) {
+						System.out.println(e.getMessage());
+					}
+				}
 			}
 		}
-		try {
-			finalFrame.addRoll(pinsHit);
-			System.out.println("Current Score:");
-			System.out.println(game.getDisplayWithRoll(pinsHit));
-		} catch (InvalidRollException e) {
-			System.out.println(e.getMessage());
-		}
 		
-		flag = false;
-		pinsHit = -1;
-		while (!flag) {
-			System.out.println("Enter the result of roll 2");
-			String result = console.nextLine();
-			if (result.matches("-?([0-9]\\d*)")) {
-				pinsHit = Integer.parseInt(result);
-				flag = true;
-			} else if (result.equalsIgnoreCase("Miss")) {
-				pinsHit = 0;
-				flag = true;
-		*/
+		game.addFrame(finalFrame);
+		System.out.println();
+		System.out.println("Final Score:");
+		System.out.println(game.getDisplay());
+			
 		
 		console.close();
 	}
 	
 	
-	public static int convertRollInput(String rollInput, Frame frame) {
+	public static int convertRollInput(Scanner console, Frame frame, int r) {
 		boolean flag = false;
 		int pinsHit = -1;
+		while (!flag) {
+			System.out.println("Enter the result of roll "+r);
+			String rollInput = console.nextLine();
 			//https://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java
 			if (rollInput.matches("-?([0-9]\\d*)")) {
 				pinsHit = Integer.parseInt(rollInput);
+				flag = true;
 			} else if (rollInput.equalsIgnoreCase("Miss")) {
 				pinsHit = 0;
+				flag = true;
 			} else if (rollInput.equalsIgnoreCase("Strike")) {
 				if (frame.getPins()==10) {
 					pinsHit = 10;
+					flag = true;
 				} else {
-					System.out.println("You cannot roll a strike when there are less than 10 pins left");
+					System.out.println("Invalid Input: You cannot roll a strike when there are less than 10 pins left");
 				}
 			} else if (rollInput.equalsIgnoreCase("Spare")) {
+				//System.out.println("Roll1: "+frame.getRoll1());
+				//System.out.println("Roll2: "+frame.getRoll2());
 				if (frame.getRoll1()<0) {
-					System.out.println("You cannot roll a spare on your first roll.");
+					System.out.println("Invalid Input: You cannot roll a spare on your first roll");
 				} else if (frame.getRoll2()<0) {
-					pinsHit = 10 - frame.getRoll1();
+					if (frame.getRoll1()!=10) {  //This should only be possible on the final frame
+						pinsHit = 10 - frame.getRoll1();
+						flag = true;
+					} else {
+						System.out.println("Invalid Input: You cannot roll a spare immediately after rolling a strike");
+					}
 				} else {
 					try {
 						FinalFrame finalFrame = (FinalFrame) frame;
 						if (finalFrame.getRoll3()<0) {
 							if (frame.getRoll1() == 10) {
 								pinsHit = 10 - frame.getRoll2();
+								flag = true;
 							} else {
-								System.out.println("The third roll cannot be a spare if you already got a spare in this frame.");
+								System.out.println("Invalid Input: The third roll cannot be a spare if you already got a spare in this frame");
 							}
 						}	
 					} catch (ClassCastException e) {}
 				}
 			} else {
-				System.out.println("You did not enter a valid input.");
+				System.out.println("Invalid Input: You did not enter a number or acceptable word");
 			}
+		}
 		return pinsHit;
 	}
 	
